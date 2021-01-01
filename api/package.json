@@ -1,0 +1,18 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@vendia/serverless-express": "^3.4.0",
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "prettier": "^2.2.1"
+  },
+  "scripts": {
+    "format:check": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "start": "node lambda.js",
+    "start:local": "node app.local.js"
+  }
+}
