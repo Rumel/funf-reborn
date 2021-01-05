@@ -1,31 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
-import './App.css';
-import axios from 'axios';
+import { Box, Container, Grid, Table } from '@material-ui/core';
+import { getBootstrap } from './service';
+import { useStateContext } from './store';
 
 function App() {
-  const [bootstrap, setBootstrap] = useState(null);
+  const { state, dispatch } = useStateContext();
+
+  const { bootstrap } = state;
 
   useEffect(() => {
-    axios.get('/api/bootstrap').then(({ data }) => {
-      setBootstrap(data);
-    });
-  }, [bootstrap, setBootstrap]);
+    if (bootstrap === null) {
+      getBootstrap(dispatch);
+    }
+  }, [bootstrap, dispatch]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-      <p className="text">{JSON.stringify(bootstrap)}</p>
-    </div>
+    <Container maxWidth="lg">
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+          <Box>Test</Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Box maxHeight="64px">
+            <img src={logo} style={{ maxHeight: '48px' }} alt="logo" />
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Table></Table>
+        </Grid>
+        <Grid item xs={12}>
+          <Box component="span">{JSON.stringify(bootstrap)}</Box>
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 
