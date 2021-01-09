@@ -52,10 +52,10 @@ app.get('/api/picks/:id/:week', (req, res) => {
     });
 });
 
-app.get('/api/transactions/:week', (req, res) => {
+app.get('/api/transactions/:leagueId', (req, res) => {
   axios
     .get(
-      `https://draft.premierleague.com/api/draft/league/${req.params.week}/transactions`
+      `https://draft.premierleague.com/api/draft/league/${req.params.leagueId}/transactions`
     )
     .then((payload) => {
       res.json(payload.data);

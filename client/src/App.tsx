@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import { Box, Container, Grid, Table } from '@material-ui/core';
-import { getBootstrap } from './service';
+import { setBootstrap } from './service';
 import { useStateContext } from './store';
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     if (bootstrap === null) {
-      getBootstrap(dispatch);
+      setBootstrap(dispatch);
     }
   }, [bootstrap, dispatch]);
 
