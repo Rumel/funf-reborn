@@ -1,4 +1,6 @@
+import { Container } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
+import { League } from './components/league';
 import { setBootstrap } from './service';
 import { useStateContext } from './store';
 
@@ -13,7 +15,12 @@ function App() {
     }
   }, [bootstrap, dispatch]);
 
-  return <div>App</div>;
+  return (
+    <Container>
+      <League />
+      <League />
+    </Container>
+  );
 }
 
 export default App;
