@@ -16,9 +16,9 @@ function App() {
   }, [bootstrap, dispatch]);
 
   return (
-    <Container>
-      <League />
-      <League />
+    <Container maxW='4xl'>
+      <League name='Fünf Stadt Überlegen I' id='11831' />
+      <League name='Fünf Stadt Überlegen II' id='41399' />
     </Container>
   );
 }
