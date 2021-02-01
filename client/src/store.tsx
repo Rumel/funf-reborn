@@ -3,7 +3,10 @@ import Reducer from './reducer';
 import { StateContext, StoreInterface } from './types';
 
 const initialState: StateContext = {
-  bootstrap: null,
+  players: null,
+  playerTypes: null,
+  playerStatCategories: null,
+  teams: null,
   game: null,
   live: null,
 };

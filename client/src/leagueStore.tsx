@@ -9,7 +9,7 @@ const initialState: LeagueContext = {
   standings: null,
   matches: null,
   picks: {},
-  transactions: {},
+  transactions: null,
 };
 
 const context = React.createContext<LeagueInterface>({

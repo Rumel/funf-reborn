@@ -2,19 +2,30 @@ import { Container } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { League } from './components/league';
 import LeagueStore from './leagueStore';
-import { setBootstrap } from './service';
+import { setBootstrap, setGame } from './service';
 import { useStateContext } from './store';
 
 function App() {
   const { state, dispatch } = useStateContext();
 
-  const { bootstrap } = state;
+  const { game, players, playerTypes, playerStatCategories, teams } = state;
 
   useEffect(() => {
-    if (bootstrap === null) {
+    if (
+      players === null ||
+      playerTypes === null ||
+      playerStatCategories === null ||
+      teams === null
+    ) {
       setBootstrap(dispatch);
     }
-  }, [bootstrap, dispatch]);
+  });
+
+  useEffect(() => {
+    if (game === null) {
+      setGame(dispatch);
+    }
+  });
 
   return (
     <Container maxW='4xl'>

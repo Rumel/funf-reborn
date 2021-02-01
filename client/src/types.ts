@@ -70,9 +70,120 @@ export interface Match {
   winning_method: any;
 }
 
+export interface Transaction {
+  added: string;
+  element_in: number;
+  element_out: number;
+  entry: number;
+  event: number;
+  id: number;
+  index: number;
+  kind: string;
+  priority: number;
+  result: string;
+}
+
+export interface Pick {
+  element: number;
+  position: number;
+  is_captain: boolean;
+  is_vice_captain: boolean;
+  multiplier: number;
+}
+
+export interface Game {
+  current_event: number;
+  current_event_finished: boolean;
+  next_event: number;
+  processing_status: string;
+  trades_time_for_approval: boolean;
+  waivers_processed: boolean;
+}
+
+export interface Player {
+  id: number;
+  assists: number | null;
+  bonus: number | null;
+  bps: number | null;
+  clean_sheets: number | null;
+  creativity: string | null;
+  goals_conceded: number | null;
+  goals_scored: number | null;
+  ict_index: string | null;
+  influence: string | null;
+  minutes: number | null;
+  own_goals: number | null;
+  penalties_missed: number | null;
+  penalties_saved: number | null;
+  red_cards: number | null;
+  saves: number | null;
+  threat: string | null;
+  yellow_cards: number | null;
+  added: string | null;
+  chance_of_playing_next_round: number | null;
+  chance_of_playing_this_round: number | null;
+  code: number | null;
+  draft_rank: number | null;
+  dreamteam_count: number | null;
+  ep_next: any;
+  ep_this: any;
+  event_points: number | null;
+  first_name: string | null;
+  form: string | null;
+  in_dreamteam: boolean | null;
+  news: string | null;
+  news_added: string | null;
+  news_return: string | null;
+  news_updated: string | null;
+  points_per_game: string | null;
+  second_name: string | null;
+  squad_number: any | null;
+  status: string | null;
+  total_points: number | null;
+  web_name: string | null;
+  influence_rank: number | null;
+  influence_rank_type: number | null;
+  creativity_rank: number | null;
+  creativity_rank_type: number | null;
+  threat_rank: number | null;
+  threat_rank_type: number | null;
+  ict_index_rank: number | null;
+  ict_index_rank_type: number | null;
+  element_type: number | null;
+  team: number | null;
+}
+
+export interface PlayerTypes {
+  id: number;
+  element_count: number;
+  singular_name: string;
+  singular_name_short: string;
+  plural_name: string;
+  plural_name_short: string;
+}
+
+export interface PlayerStatCategories {
+  name: string;
+  label: string;
+  abbreviation: string;
+  is_match_stat: boolean;
+  match_stat_order: any;
+  sort: string;
+}
+
+export interface Team {
+  code: number;
+  id: number;
+  name: string;
+  pulse_id: number;
+  short_name: string;
+}
 export interface StateContext {
-  bootstrap: any;
-  game: any;
+  players: Player[] | null;
+  playerTypes: PlayerTypes[] | null;
+  playerStatCategories: PlayerStatCategories[] | null;
+  teams: Team[] | null;
+  game: Game | null;
   live: any;
 }
 
@@ -87,8 +198,10 @@ export interface LeagueContext {
   league_entries: LeagueEntry[] | null;
   standings: StandingRow[] | null;
   matches: Match[] | null;
-  picks: any;
-  transactions: any;
+  picks: {
+    [id: string]: Pick[];
+  };
+  transactions: Transaction[] | null;
 }
 
 export interface LeagueInterface {
