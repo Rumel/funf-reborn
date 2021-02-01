@@ -69,7 +69,6 @@ export const Standings = () => {
               return null;
             }
 
-            // Make this a clickable modal?
             return (
               <Tr
                 key={standing.rank}
