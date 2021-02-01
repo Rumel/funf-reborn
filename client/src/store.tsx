@@ -5,10 +5,7 @@ import { StateContext, StoreInterface } from './types';
 const initialState: StateContext = {
   bootstrap: null,
   game: null,
-  leagues: {},
   live: null,
-  picks: {},
-  transactions: {},
 };
 
 const context = React.createContext<StoreInterface>({

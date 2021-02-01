@@ -73,17 +73,7 @@ export interface Match {
 export interface StateContext {
   bootstrap: any;
   game: any;
-  leagues: {
-    [id: string]: {
-      league: League;
-      league_entries: LeagueEntry[];
-      standings: StandingRow[];
-      matches: Match[];
-    };
-  };
   live: any;
-  picks: any;
-  transactions: any;
 }
 
 export interface StoreInterface {

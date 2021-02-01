@@ -13,16 +13,7 @@ export const setGame = (dispatch: React.Dispatch<Action>) => {
   });
 };
 
-export const setLeague = (dispatch: React.Dispatch<Action>, id: string) => {
-  axios.get(`/api/leagues/${id}`).then(({ data }) => {
-    dispatch({
-      type: ActionType.SET_LEAGUE,
-      payload: { leagueId: id, data: data },
-    });
-  });
-};
-
-export const setLeagueTwo = (dispatch: React.Dispatch<Action>, id: number) => {
+export const setLeague = (dispatch: React.Dispatch<Action>, id: number) => {
   axios.get(`/api/leagues/${id}`).then(({ data }) => {
     dispatch({
       type: ActionType.SET_LEAGUE,

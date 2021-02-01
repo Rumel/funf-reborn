@@ -3,50 +3,24 @@ import { Box, Center, Heading } from '@chakra-ui/react';
 
 import { Standings } from './standings';
 import { MatchContainer } from './matchContainer';
-import { useStateContext } from '../store';
-import { setLeague, setLeagueTwo } from '../service';
+import { setLeague } from '../service';
 import { FunfSpinner } from './shared/funfSpinner';
 import { useLeagueContext } from '../leagueStore';
 
-type Props = {
-  name: string;
-  id: string;
-};
-
-export const League = (props: Props) => {
-  const { state, dispatch } = useStateContext();
+export const League = () => {
   const { leagueState, leagueDispatch } = useLeagueContext();
-  const { id } = props;
-
-  const leagueData = state.leagues[id];
-  const otherLeagueId = leagueState.id;
-  const otherLeague = leagueState.league;
+  const { id } = leagueState;
+  const { league, league_entries } = leagueState;
 
   useEffect(() => {
-    if (leagueData == null) {
-      setLeague(dispatch, id);
+    if (league === null && id !== null) {
+      setLeague(leagueDispatch, id);
     }
   });
 
-  useEffect(() => {
-    if (otherLeague === null) {
-      if (otherLeagueId !== null) {
-        setLeagueTwo(leagueDispatch, otherLeagueId);
-      }
-    }
-  });
-
-  if (!leagueData) {
+  if (!league) {
     return <FunfSpinner />;
   }
-
-  const { league } = leagueData;
-  const leagueEntries = leagueData.league_entries;
-
-  console.log(league);
-
-  console.log('Other League');
-  console.log(otherLeague);
 
   return (
     <Box>
@@ -55,7 +29,7 @@ export const League = (props: Props) => {
           <Heading>{league.name}</Heading>
         </Center>
       </Box>
-      <Standings leagueId={id} />
+      <Standings />
       <MatchContainer />
     </Box>
   );

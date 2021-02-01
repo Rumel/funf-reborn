@@ -19,10 +19,10 @@ function App() {
   return (
     <Container maxW='4xl'>
       <LeagueStore id={11831}>
-        <League name='Fünf Stadt Überlegen I' id='11831' />
+        <League />
       </LeagueStore>
       <LeagueStore id={41399}>
-        <League name='Fünf Stadt Überlegen II' id='41399' />
+        <League />
       </LeagueStore>
     </Container>
   );

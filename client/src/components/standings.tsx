@@ -1,33 +1,24 @@
+import React, { useEffect } from 'react';
 import { Box } from '@chakra-ui/react';
 import _ from 'lodash';
-import React, { useEffect } from 'react';
+import { useLeagueContext } from '../leagueStore';
 import { setLeague } from '../service';
-import { useStateContext } from '../store';
 import { StandingsHeader } from './standings/standingsHeader';
 import { StandingsRow } from './standings/standingsRow';
 
-type Props = {
-  leagueId: string;
-};
-
-export const Standings = (props: Props) => {
-  const { state, dispatch } = useStateContext();
-  const { leagueId } = props;
-
-  const leagueData = state.leagues[leagueId];
+export const Standings = () => {
+  const { leagueState, leagueDispatch } = useLeagueContext();
+  const { id, league_entries, standings } = leagueState;
 
   useEffect(() => {
-    if (leagueData == null) {
-      setLeague(dispatch, leagueId);
+    if ((league_entries === null || standings === null) && id !== null) {
+      setLeague(leagueDispatch, id);
     }
   });
 
-  if (!leagueData) {
+  if (league_entries === null || standings === null) {
     return null;
   }
-
-  const { standings } = leagueData;
-  const leagueEntries = leagueData.league_entries;
 
   return (
     <Box>
@@ -35,7 +26,7 @@ export const Standings = (props: Props) => {
       <StandingsHeader></StandingsHeader>
       {standings.map((standing) => {
         const leagueEntry = _.find(
-          leagueEntries,
+          league_entries,
           (le) => le.id === standing.league_entry
         );
 
