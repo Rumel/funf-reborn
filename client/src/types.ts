@@ -90,3 +90,18 @@ export interface StoreInterface {
   state: StateContext;
   dispatch: React.Dispatch<Action>;
 }
+
+export interface LeagueContext {
+  id: number | null;
+  league: League | null;
+  league_entries: LeagueEntry[] | null;
+  standings: StandingRow[] | null;
+  matches: Match[] | null;
+  picks: any;
+  transactions: any;
+}
+
+export interface LeagueInterface {
+  leagueState: LeagueContext;
+  leagueDispatch: React.Dispatch<Action>;
+}

@@ -4,8 +4,9 @@ import { Box, Center, Heading } from '@chakra-ui/react';
 import { Standings } from './standings';
 import { MatchContainer } from './matchContainer';
 import { useStateContext } from '../store';
-import { setLeague } from '../service';
+import { setLeague, setLeagueTwo } from '../service';
 import { FunfSpinner } from './shared/funfSpinner';
+import { useLeagueContext } from '../leagueStore';
 
 type Props = {
   name: string;
@@ -14,13 +15,24 @@ type Props = {
 
 export const League = (props: Props) => {
   const { state, dispatch } = useStateContext();
+  const { leagueState, leagueDispatch } = useLeagueContext();
   const { id } = props;
 
   const leagueData = state.leagues[id];
+  const otherLeagueId = leagueState.id;
+  const otherLeague = leagueState.league;
 
   useEffect(() => {
     if (leagueData == null) {
       setLeague(dispatch, id);
+    }
+  });
+
+  useEffect(() => {
+    if (otherLeague === null) {
+      if (otherLeagueId !== null) {
+        setLeagueTwo(leagueDispatch, otherLeagueId);
+      }
     }
   });
 
@@ -32,6 +44,9 @@ export const League = (props: Props) => {
   const leagueEntries = leagueData.league_entries;
 
   console.log(league);
+
+  console.log('Other League');
+  console.log(otherLeague);
 
   return (
     <Box>

@@ -22,6 +22,15 @@ export const setLeague = (dispatch: React.Dispatch<Action>, id: string) => {
   });
 };
 
+export const setLeagueTwo = (dispatch: React.Dispatch<Action>, id: number) => {
+  axios.get(`/api/leagues/${id}`).then(({ data }) => {
+    dispatch({
+      type: ActionType.SET_LEAGUE,
+      payload: { data: data },
+    });
+  });
+};
+
 export const setLive = (dispatch: React.Dispatch<Action>, week: number) => {
   axios.get(`/api/live/${week}`).then(({ data }) => {
     dispatch({ type: ActionType.SET_LIVE, payload: data });
