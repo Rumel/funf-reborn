@@ -16,7 +16,7 @@ export const League = () => {
     if (league === null && id !== null) {
       setLeague(leagueDispatch, id);
     }
-  });
+  }, []);
 
   if (!league) {
     return <FunfSpinner />;

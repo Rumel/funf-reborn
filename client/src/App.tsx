@@ -19,7 +19,7 @@ function App() {
     ) {
       setBootstrap(dispatch);
     }
-  });
+  }, []);
 
   useEffect(() => {
     if (game === null) {
