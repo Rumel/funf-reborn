@@ -10,7 +10,7 @@ import { useLeagueContext } from '../leagueStore';
 export const League = () => {
   const { leagueState, leagueDispatch } = useLeagueContext();
   const { id } = leagueState;
-  const { league, league_entries } = leagueState;
+  const { league } = leagueState;
 
   useEffect(() => {
     if (league === null && id !== null) {

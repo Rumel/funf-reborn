@@ -1,4 +1,4 @@
-import { Container } from '@chakra-ui/react';
+import { Container, Stack } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { League } from './components/league';
 import LeagueStore from './leagueStore';
@@ -29,12 +29,14 @@ function App() {
 
   return (
     <Container maxW='4xl'>
-      <LeagueStore id={11831}>
-        <League />
-      </LeagueStore>
-      <LeagueStore id={41399}>
-        <League />
-      </LeagueStore>
+      <Stack spacing={3}>
+        <LeagueStore id={11831}>
+          <League />
+        </LeagueStore>
+        <LeagueStore id={41399}>
+          <League />
+        </LeagueStore>
+      </Stack>
     </Container>
   );
 }
