@@ -17,6 +17,8 @@ import { setLeague } from '../service';
 import { LeagueEntry, StandingRow } from '../types';
 import { TeamModal } from './modals/teamModal';
 
+const mobileDisplay = ['none', 'none', 'table-cell'];
+
 export const Standings = () => {
   const { leagueState, leagueDispatch } = useLeagueContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -52,9 +54,9 @@ export const Standings = () => {
         <Thead>
           <Th>#</Th>
           <Th>Club</Th>
-          <Th>W</Th>
-          <Th>L</Th>
-          <Th>D</Th>
+          <Th display={mobileDisplay}>W</Th>
+          <Th display={mobileDisplay}>L</Th>
+          <Th display={mobileDisplay}>D</Th>
           <Th>+</Th>
           <Th>Pts</Th>
         </Thead>
@@ -86,9 +88,9 @@ export const Standings = () => {
                     <Text fontSize='sm'>Form</Text>
                   </Stack>
                 </Td>
-                <Td>{standing.matches_won}</Td>
-                <Td>{standing.matches_lost}</Td>
-                <Td>{standing.matches_drawn}</Td>
+                <Td display={mobileDisplay}>{standing.matches_won}</Td>
+                <Td display={mobileDisplay}>{standing.matches_lost}</Td>
+                <Td display={mobileDisplay}>{standing.matches_drawn}</Td>
                 <Td>{standing.points_for}</Td>
                 <Td>{standing.total}</Td>
               </Tr>
