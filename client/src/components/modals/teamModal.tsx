@@ -93,6 +93,9 @@ export const TeamModal = (props: Props) => {
   const teamPlayers = teamPicks.picks
     .filter((p) => p.position < 12)
     .map((p) => generatePlayerInfoFromPick(p, players));
+  const subs = teamPicks.picks
+    .filter((p) => p.position > 11)
+    .map((p) => generatePlayerInfoFromPick(p, players));
   //Position isn't position, generate a player info to be passed in
   const keepers = _.filter(teamPlayers, (p) => p.position === Position.GKP);
   const defenders = _.filter(teamPlayers, (p) => p.position === Position.DEF);
@@ -102,7 +105,7 @@ export const TeamModal = (props: Props) => {
   return (
     <Modal isOpen={isOpen} size='full' onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent my={0}>
         <ModalHeader>{leagueEntry.entry_name}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
@@ -110,13 +113,8 @@ export const TeamModal = (props: Props) => {
           {generateLine(defenders)}
           {generateLine(midfielders)}
           {generateLine(forwards)}
+          {generateLine(subs)}
         </ModalBody>
-        <ModalFooter>
-          <Button colorScheme='blue' mr={3} onClick={onClose}>
-            Close
-          </Button>
-          <Button variant='ghost'>Secondary Action</Button>
-        </ModalFooter>
       </ModalContent>
     </Modal>
   );
