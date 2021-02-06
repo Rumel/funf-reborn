@@ -83,7 +83,7 @@ export interface Transaction {
   result: string;
 }
 
-export interface Pick {
+export interface PickType {
   element: number;
   position: number;
   is_captain: boolean;
@@ -122,13 +122,13 @@ export interface Player {
   added: string | null;
   chance_of_playing_next_round: number | null;
   chance_of_playing_this_round: number | null;
-  code: number | null;
+  code: number;
   draft_rank: number | null;
   dreamteam_count: number | null;
   ep_next: any;
   ep_this: any;
   event_points: number | null;
-  first_name: string | null;
+  first_name: string;
   form: string | null;
   in_dreamteam: boolean | null;
   news: string | null;
@@ -136,11 +136,11 @@ export interface Player {
   news_return: string | null;
   news_updated: string | null;
   points_per_game: string | null;
-  second_name: string | null;
+  second_name: string;
   squad_number: any | null;
   status: string | null;
   total_points: number | null;
-  web_name: string | null;
+  web_name: string;
   influence_rank: number | null;
   influence_rank_type: number | null;
   creativity_rank: number | null;
@@ -149,9 +149,27 @@ export interface Player {
   threat_rank_type: number | null;
   ict_index_rank: number | null;
   ict_index_rank_type: number | null;
-  element_type: number | null;
+  element_type: number;
   team: number | null;
 }
+
+export enum Position {
+  GKP = 'GKP',
+  DEF = 'DEF',
+  MID = 'MID',
+  FWD = 'FWD',
+}
+
+export type PlayerInfo = {
+  id: number;
+  name: string;
+  firstName: string;
+  lastName: string;
+  code: number;
+  webName: string;
+  url: string;
+  position: Position;
+};
 
 export interface PlayerTypes {
   id: number;
@@ -192,6 +210,10 @@ export interface StoreInterface {
   dispatch: React.Dispatch<Action>;
 }
 
+export type Picks = {
+  picks: PickType[];
+  subs: PickType[];
+};
 export interface LeagueContext {
   id: number | null;
   league: League | null;
@@ -199,7 +221,7 @@ export interface LeagueContext {
   standings: StandingRow[] | null;
   matches: Match[] | null;
   picks: {
-    [id: string]: Pick[];
+    [id: string]: Picks;
   };
   transactions: Transaction[] | null;
 }

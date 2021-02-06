@@ -30,7 +30,7 @@ export const setLive = (dispatch: React.Dispatch<Action>, week: number) => {
 
 export const setPicks = (
   dispatch: React.Dispatch<Action>,
-  teamId: string,
+  teamId: number,
   week: number
 ) => {
   axios.get(`/api/picks/${teamId}/${week}`).then(({ data }) => {

@@ -20,7 +20,10 @@ const LeagueReducer = (state: LeagueContext, action: Action) => {
     case ActionType.SET_PICKS:
       const { picks } = state;
       const id = `${action.payload.teamId}-${action.payload.week}`;
-      picks[id] = action.payload.data;
+      picks[id] = {
+        picks: action.payload.data.picks,
+        subs: action.payload.data.subs,
+      };
 
       return { ...state, picks: picks };
     case ActionType.SET_TRANSACTIONS:
