@@ -2,6 +2,10 @@ import { Action, ActionType, LeagueContext } from './types';
 
 const LeagueReducer = (state: LeagueContext, action: Action) => {
   switch (action.type) {
+    case ActionType.SET_LEAGUE_ID:
+      return { ...state, id: action.payload.id };
+    case ActionType.SET_LEAGUE_ADVANCEMENT:
+      return { ...state, advancement: action.payload.advancement };
     case ActionType.SET_LEAGUE:
       const {
         league,

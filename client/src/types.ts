@@ -5,6 +5,8 @@ export enum ActionType {
   SET_LIVE = 'SET_LIVE',
   SET_PICKS = 'SET_PICKS',
   SET_TRANSACTIONS = 'SET_TRANSACTIONS',
+  SET_LEAGUE_ID = 'SET_LEAGUE_ID',
+  SET_LEAGUE_ADVANCEMENT = 'SET_LEAGUE_ADVANCEMENT',
 }
 
 export type Action = {
@@ -215,6 +217,13 @@ export type Picks = {
   picks: PickType[];
   subs: PickType[];
 };
+
+export type Advancement = {
+  promotion: number[];
+  relegation: number[];
+  possibleRelegation: number[];
+  possiblePromotion: number[];
+};
 export interface LeagueContext {
   id: number | null;
   league: League | null;
@@ -225,6 +234,7 @@ export interface LeagueContext {
     [id: string]: Picks;
   };
   transactions: Transaction[] | null;
+  advancement: Advancement | null;
 }
 
 export interface LeagueInterface {

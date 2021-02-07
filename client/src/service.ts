@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Action, ActionType } from './types';
+import { Action, ActionType, Advancement } from './types';
 
 export const setBootstrap = (dispatch: React.Dispatch<Action>) => {
   axios.get('/api/bootstrap').then(({ data }) => {
@@ -50,5 +50,19 @@ export const setTransactions = (
       type: ActionType.SET_TRANSACTIONS,
       payload: { leagueId: leagueId, data: data },
     });
+  });
+};
+
+export const setLeagueId = (dispatch: React.Dispatch<Action>, id: number) => {
+  dispatch({ type: ActionType.SET_LEAGUE_ID, payload: { id } });
+};
+
+export const setLeagueAdvancement = (
+  dispatch: React.Dispatch<Action>,
+  advancement: Advancement
+) => {
+  dispatch({
+    type: ActionType.SET_LEAGUE_ADVANCEMENT,
+    payload: { advancement },
   });
 };

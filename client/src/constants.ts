@@ -1,0 +1,6 @@
+export const COLORS = {
+  PROMOTION: '#5ac18e',
+  RELEGATION: '#FA8072',
+  POSSIBLE_RELEGATION: '#ffc0cb',
+  POSSIBLE_PROMOTION: '#61E984',
+};

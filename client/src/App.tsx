@@ -4,6 +4,7 @@ import { League } from './components/league';
 import LeagueStore from './leagueStore';
 import { setBootstrap, setGame } from './service';
 import { useStateContext } from './store';
+import { Advancement } from './types';
 
 function App() {
   const { state, dispatch } = useStateContext();
@@ -19,7 +20,7 @@ function App() {
     ) {
       setBootstrap(dispatch);
     }
-  }, []);
+  }, [players, playerTypes, playerStatCategories, teams, dispatch]);
 
   useEffect(() => {
     if (game === null) {
@@ -30,10 +31,24 @@ function App() {
   return (
     <Container maxW='4xl'>
       <Stack spacing={3}>
-        <LeagueStore id={11831}>
+        <LeagueStore
+          id={11831}
+          advancement={{
+            possiblePromotion: [],
+            possibleRelegation: [6],
+            relegation: [7, 8],
+            promotion: [],
+          }}>
           <League />
         </LeagueStore>
-        <LeagueStore id={41399}>
+        <LeagueStore
+          id={41399}
+          advancement={{
+            possiblePromotion: [3],
+            possibleRelegation: [],
+            relegation: [],
+            promotion: [1, 2],
+          }}>
           <League />
         </LeagueStore>
       </Stack>

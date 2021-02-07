@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Box, Center, Heading } from '@chakra-ui/react';
+import { Box, Center, Heading, VStack } from '@chakra-ui/react';
 
 import { Standings } from './standings';
 import { MatchContainer } from './matchContainer';
@@ -16,7 +16,7 @@ export const League = () => {
     if (league === null && id !== null) {
       setLeague(leagueDispatch, id);
     }
-  }, []);
+  }, [league, id, leagueDispatch]);
 
   if (!league) {
     return <FunfSpinner />;
@@ -24,13 +24,15 @@ export const League = () => {
 
   return (
     <Box>
-      <Box>
-        <Center>
-          <Heading>{league.name}</Heading>
-        </Center>
-      </Box>
-      <Standings />
-      <MatchContainer />
+      <VStack spacing='1rem' align='stretch'>
+        <Box>
+          <Center>
+            <Heading>{league.name}</Heading>
+          </Center>
+        </Box>
+        <Standings />
+        <MatchContainer />
+      </VStack>
     </Box>
   );
 };

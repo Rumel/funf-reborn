@@ -1,6 +1,7 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import LeagueReducer from './leagueReducer';
-import { LeagueContext, LeagueInterface } from './types';
+import { setLeagueAdvancement, setLeagueId } from './service';
+import { Advancement, LeagueContext, LeagueInterface } from './types';
 
 const initialState: LeagueContext = {
   id: null,
@@ -10,6 +11,7 @@ const initialState: LeagueContext = {
   matches: null,
   picks: {},
   transactions: null,
+  advancement: null,
 };
 
 const context = React.createContext<LeagueInterface>({
@@ -19,9 +21,26 @@ const context = React.createContext<LeagueInterface>({
 
 export const useLeagueContext = () => useContext(context);
 
-const LeagueStore = ({ id, children }: { id: number; children: any }) => {
-  initialState.id = id;
+type Props = {
+  id: number;
+  advancement: Advancement;
+  children: any;
+};
+
+const LeagueStore = ({ id, children, advancement }: Props) => {
   const [leagueState, leagueDispatch] = useReducer(LeagueReducer, initialState);
+
+  useEffect(() => {
+    if (leagueState.id === null) {
+      setLeagueId(leagueDispatch, id);
+    }
+  }, [id, leagueState, leagueDispatch]);
+
+  useEffect(() => {
+    if (leagueState.advancement === null) {
+      setLeagueAdvancement(leagueDispatch, advancement);
+    }
+  }, [advancement, leagueState, leagueDispatch]);
 
   return (
     <context.Provider value={{ leagueState, leagueDispatch }}>
