@@ -43,7 +43,7 @@ export const setPicks = (
 
 export const setTransactions = (
   dispatch: React.Dispatch<Action>,
-  leagueId: string
+  leagueId: number
 ) => {
   axios.get(`/api/transactions/${leagueId}`).then(({ data }) => {
     dispatch({

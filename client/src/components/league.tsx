@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Box, Center, Heading, VStack } from '@chakra-ui/react';
 
 import { Standings } from './standings';
-import { MatchContainer } from './matchContainer';
+import { GameweekContainer } from './gameweekContainer';
 import { setLeague } from '../service';
 import { FunfSpinner } from './shared/funfSpinner';
 import { useLeagueContext } from '../leagueStore';
@@ -31,7 +31,7 @@ export const League = () => {
           </Center>
         </Box>
         <Standings />
-        <MatchContainer />
+        <GameweekContainer />
       </VStack>
     </Box>
   );
