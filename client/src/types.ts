@@ -129,7 +129,7 @@ export interface Player {
   ep_this: any;
   event_points: number | null;
   first_name: string;
-  form: string | null;
+  form: string;
   in_dreamteam: boolean | null;
   news: string | null;
   news_added: string | null;
@@ -169,6 +169,7 @@ export type PlayerInfo = {
   webName: string;
   url: string;
   position: Position;
+  form: string;
 };
 
 export interface PlayerTypes {

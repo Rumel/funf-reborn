@@ -65,6 +65,7 @@ export const generatePlayerInfo = (player: Player): PlayerInfo => {
     webName: player.web_name,
     url: `https://resources.premierleague.com/premierleague/photos/players/110x140/p${player.code}.png`,
     position: getPosition(player.element_type),
+    form: player.form,
   };
 };
 

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
-  Button,
   Center,
   HStack,
   Image,
@@ -9,19 +8,11 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   VStack,
 } from '@chakra-ui/react';
-import {
-  LeagueEntry,
-  PickType,
-  Player,
-  PlayerInfo,
-  Position,
-  StandingRow,
-} from '../../types';
+import { LeagueEntry, PlayerInfo, Position, StandingRow } from '../../types';
 import { useLeagueContext } from '../../leagueStore';
 import { useStateContext } from '../../store';
 import { setBootstrap, setGame, setPicks } from '../../service';
@@ -41,10 +32,11 @@ const generateLine = (line: PlayerInfo[]) => {
       <HStack spacing='1rem'>
         {line.map((p) => {
           return (
-            <Box>
+            <Box key={p.id}>
               <VStack spacing='0.25rem'>
                 <Image w='45px' src={p.url} alt={p.name} />
-                <p key={p.id}>{p.webName}</p>
+                <p>{p.webName}</p>
+                <p>{p.form}</p>
               </VStack>
             </Box>
           );
@@ -60,8 +52,6 @@ export const TeamModal = (props: Props) => {
   const { leagueState, leagueDispatch } = useLeagueContext();
   const { picks } = leagueState;
   const { leagueEntry, standingRow, isOpen, onClose } = props;
-
-  console.log(leagueEntry);
 
   useEffect(() => {
     if (!players) {
@@ -96,7 +86,7 @@ export const TeamModal = (props: Props) => {
   const subs = teamPicks.picks
     .filter((p) => p.position > 11)
     .map((p) => generatePlayerInfoFromPick(p, players));
-  //Position isn't position, generate a player info to be passed in
+
   const keepers = _.filter(teamPlayers, (p) => p.position === Position.GKP);
   const defenders = _.filter(teamPlayers, (p) => p.position === Position.DEF);
   const midfielders = _.filter(teamPlayers, (p) => p.position === Position.MID);
@@ -109,11 +99,13 @@ export const TeamModal = (props: Props) => {
         <ModalHeader>{leagueEntry.entry_name}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          {generateLine(keepers)}
-          {generateLine(defenders)}
-          {generateLine(midfielders)}
-          {generateLine(forwards)}
-          {generateLine(subs)}
+          <VStack spacing='0.5rem'>
+            {generateLine(keepers)}
+            {generateLine(defenders)}
+            {generateLine(midfielders)}
+            {generateLine(forwards)}
+            {generateLine(subs)}
+          </VStack>
         </ModalBody>
       </ModalContent>
     </Modal>
