@@ -74,8 +74,6 @@ export const Standings = () => {
     return 'unset';
   };
 
-  console.log(advancement);
-
   return (
     <Box>
       <TeamModal

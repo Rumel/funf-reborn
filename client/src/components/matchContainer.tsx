@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Center, Grid, Heading, VStack } from '@chakra-ui/react';
+import {
+  Center,
+  Container,
+  Flex,
+  Grid,
+  Heading,
+  Select,
+  VStack,
+} from '@chakra-ui/react';
 
 import { Match } from './match';
 import { useStateContext } from '../store';
@@ -23,7 +31,13 @@ export const MatchContainer = () => {
     return null;
   }
 
+  const handleGameweekChange = (week: number) => {
+    console.log(week);
+    setSelectedGameweek(week);
+  };
+
   const currentMatches = _.filter(matches, (m) => m.event === selectedGameweek);
+  const gameWeeks = _.reverse(_.range(1, game.current_event + 1));
 
   return (
     <VStack spacing='1rem' align='stretch'>
@@ -48,6 +62,16 @@ export const MatchContainer = () => {
           return null;
         })}
       </Grid>
+      <Flex align='flex' justifyContent='flex-end'>
+        <Select
+          onChange={(e) => handleGameweekChange(parseInt(e.target.value, 10))}
+          value={selectedGameweek}
+          w='5rem'>
+          {gameWeeks.map((gw) => {
+            return <option key={gw}>{gw}</option>;
+          })}
+        </Select>
+      </Flex>
     </VStack>
   );
 };
