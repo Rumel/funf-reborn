@@ -11,18 +11,22 @@ import {
   Text,
   useDisclosure,
   VStack,
+  Link,
 } from '@chakra-ui/react';
 import _ from 'lodash';
 import { useLeagueContext } from '../leagueStore';
-import { setLeague } from '../service';
+import { setGame, setLeague } from '../service';
 import { LeagueEntry, StandingRow } from '../types';
 import { TeamModal } from './modals/teamModal';
 import { PromotionLine } from './promotionLine';
 import { COLORS } from '../constants';
+import { useStateContext } from '../store';
 
 const mobileDisplay = ['none', 'none', 'table-cell'];
 
 export const Standings = () => {
+  const { state, dispatch } = useStateContext();
+  const { game } = state;
   const { leagueState, leagueDispatch } = useLeagueContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { id, league_entries, standings, advancement } = leagueState;
@@ -35,7 +39,18 @@ export const Standings = () => {
     }
   });
 
-  if (league_entries === null || standings === null || advancement === null) {
+  useEffect(() => {
+    if (game === null) {
+      setGame(dispatch);
+    }
+  }, [game, dispatch]);
+
+  if (
+    league_entries === null ||
+    standings === null ||
+    advancement === null ||
+    game === null
+  ) {
     return null;
   }
 
@@ -99,9 +114,14 @@ export const Standings = () => {
                   <Td>{standing.rank}</Td>
                   <Td>
                     <Stack spacing={1}>
-                      <Text fontSize='md' fontWeight='bold'>
-                        {leagueEntry.entry_name}
-                      </Text>
+                      <Link
+                        href={`https://draft.premierleague.com/entry/${leagueEntry.entry_id}/event/${game.current_event}`}
+                        isExternal>
+                        <Text fontSize='md' fontWeight='bold'>
+                          {leagueEntry.entry_name}
+                        </Text>
+                      </Link>
+
                       <Text fontSize='sm'>
                         {leagueEntry.player_first_name}{' '}
                         {leagueEntry.player_last_name}
