@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@chakra-ui/react';
+import { Center, Grid, Heading, VStack } from '@chakra-ui/react';
 
 import { Match } from './match';
 import { useStateContext } from '../store';
@@ -26,17 +26,28 @@ export const MatchContainer = () => {
   const currentMatches = _.filter(matches, (m) => m.event === selectedGameweek);
 
   return (
-    <Grid templateColumns='repeat(2, 1fr)'>
-      {currentMatches.map((m, i) => {
-        const away = _.find(league_entries, (le) => le.id === m.league_entry_1);
-        const home = _.find(league_entries, (le) => le.id === m.league_entry_2);
+    <VStack spacing='1rem' align='stretch'>
+      <Center>
+        <Heading size='xl'>Gameweek {selectedGameweek}</Heading>
+      </Center>
+      <Grid templateColumns='repeat(2, 1fr)'>
+        {currentMatches.map((m, i) => {
+          const away = _.find(
+            league_entries,
+            (le) => le.id === m.league_entry_1
+          );
+          const home = _.find(
+            league_entries,
+            (le) => le.id === m.league_entry_2
+          );
 
-        if (away && home) {
-          return <Match key={i} away={away} home={home} match={m}></Match>;
-        }
+          if (away && home) {
+            return <Match key={i} away={away} home={home} match={m}></Match>;
+          }
 
-        return null;
-      })}
-    </Grid>
+          return null;
+        })}
+      </Grid>
+    </VStack>
   );
 };
