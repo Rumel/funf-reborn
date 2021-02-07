@@ -44,7 +44,7 @@ export const MatchContainer = () => {
       <Center>
         <Heading size='xl'>Gameweek {selectedGameweek}</Heading>
       </Center>
-      <Grid templateColumns='repeat(2, 1fr)'>
+      <Grid templateColumns={['auto', 'auto', 'repeat(2, 1fr)']}>
         {currentMatches.map((m, i) => {
           const away = _.find(
             league_entries,
