@@ -21,6 +21,7 @@ import { TeamModal } from './modals/teamModal';
 import { PromotionLine } from './promotionLine';
 import { COLORS } from '../constants';
 import { useStateContext } from '../store';
+import { getTeamLink } from '../helpers/helpers';
 
 const mobileDisplay = ['none', 'none', 'table-cell'];
 
@@ -113,7 +114,10 @@ export const Standings = () => {
                   <Td>
                     <Stack spacing={1}>
                       <Link
-                        href={`https://draft.premierleague.com/entry/${leagueEntry.entry_id}/event/${game.current_event}`}
+                        href={getTeamLink(
+                          leagueEntry.entry_id,
+                          game.current_event
+                        )}
                         isExternal>
                         <Text fontSize='md' fontWeight='bold'>
                           {leagueEntry.entry_name}

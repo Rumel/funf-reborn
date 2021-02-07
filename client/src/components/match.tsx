@@ -1,5 +1,6 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Link, Text } from '@chakra-ui/react';
 import React from 'react';
+import { getTeamLink } from '../helpers/helpers';
 import { LeagueEntry, Match as MatchType } from '../types';
 
 type Props = {
@@ -16,9 +17,13 @@ export const Match = (props: Props) => {
       <Box padding='0.5rem'>
         <Box display='flex'>
           <Box flexGrow={1}>
-            <Text fontSize='xl' fontWeight='bold'>
+            <Link
+              href={getTeamLink(away.entry_id, match.event)}
+              fontSize='xl'
+              fontWeight='bold'
+              isExternal>
               {away.entry_name}
-            </Text>
+            </Link>
           </Box>
           <Box float='right'>
             <Text>{match.league_entry_1_points}</Text>
@@ -26,9 +31,13 @@ export const Match = (props: Props) => {
         </Box>
         <Box display='flex'>
           <Box flexGrow={1}>
-            <Text fontSize='xl' fontWeight='bold'>
+            <Link
+              href={getTeamLink(home.entry_id, match.event)}
+              fontSize='xl'
+              fontWeight='bold'
+              isExternal>
               {home.entry_name}
-            </Text>
+            </Link>
           </Box>
           <Box float='right'>
             <Text>{match.league_entry_2_points}</Text>
