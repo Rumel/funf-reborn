@@ -62,7 +62,7 @@ export const MatchContainer = () => {
           return null;
         })}
       </Grid>
-      <Flex align='flex' justifyContent='flex-end'>
+      <Flex align='flex' justifyContent='flex-end' pr={2}>
         <Select
           onChange={(e) => handleGameweekChange(parseInt(e.target.value, 10))}
           value={selectedGameweek}
