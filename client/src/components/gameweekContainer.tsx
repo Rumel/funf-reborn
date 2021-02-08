@@ -67,7 +67,7 @@ export const GameweekContainer = () => {
       <Center>
         <Heading size='xl'>Gameweek {selectedGameweek}</Heading>
       </Center>
-      <Grid templateColumns={['auto', 'auto', 'repeat(2, 1fr)']}>
+      <Grid templateColumns={['auto', 'auto', 'repeat(2, 1fr)']} gridGap={4}>
         {currentMatches.map((m, i) => {
           const away = _.find(
             league_entries,

@@ -13,8 +13,8 @@ export const Match = (props: Props) => {
   const { away, home, match } = props;
 
   return (
-    <Box border='1px solid black' margin='0.25rem'>
-      <Box padding='0.5rem'>
+    <Box border='1px solid black' margin={1} borderRadius='0.5rem'>
+      <Box padding={2}>
         <Box display='flex'>
           <Box flexGrow={1}>
             <Link
