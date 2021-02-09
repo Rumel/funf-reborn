@@ -19,7 +19,7 @@ import { setGame, setLeague } from '../service';
 import { LeagueEntry, StandingRow } from '../types';
 import { TeamModal } from './modals/teamModal';
 import { PromotionLine } from './promotionLine';
-import { COLORS } from '../constants';
+import { RELEGATION_COLORS } from '../constants';
 import { useStateContext } from '../store';
 import { getTeamLink } from '../helpers/helpers';
 
@@ -63,13 +63,13 @@ export const Standings = () => {
 
   const getRowColor = (rank: number): string => {
     if (advancement.promotion.includes(rank)) {
-      return COLORS.PROMOTION;
+      return RELEGATION_COLORS.PROMOTION;
     } else if (advancement.relegation.includes(rank)) {
-      return COLORS.RELEGATION;
+      return RELEGATION_COLORS.RELEGATION;
     } else if (advancement.possiblePromotion.includes(rank)) {
-      return COLORS.POSSIBLE_PROMOTION;
+      return RELEGATION_COLORS.POSSIBLE_PROMOTION;
     } else if (advancement.possibleRelegation.includes(rank)) {
-      return COLORS.POSSIBLE_RELEGATION;
+      return RELEGATION_COLORS.POSSIBLE_RELEGATION;
     }
 
     return 'unset';

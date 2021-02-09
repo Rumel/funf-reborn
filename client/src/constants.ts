@@ -1,6 +1,11 @@
-export const COLORS = {
+export const RELEGATION_COLORS = {
   PROMOTION: '#5ac18e',
   RELEGATION: '#FA8072',
   POSSIBLE_RELEGATION: '#ffc0cb',
   POSSIBLE_PROMOTION: '#61E984',
+};
+
+export const TRANSFER_COLORS = {
+  ACCEPTED: 'green.200',
+  DENIED: 'red.200',
 };

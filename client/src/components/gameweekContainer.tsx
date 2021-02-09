@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Button,
+  ButtonGroup,
   Center,
-  Container,
   Flex,
   Grid,
   Heading,
@@ -16,12 +17,18 @@ import _ from 'lodash';
 import { Transactions } from './transactions';
 import { setBootstrap, setTransactions } from '../service';
 
+enum TABS {
+  MATCHES = 'MATCHES',
+  TRANSACTIONS = 'TRANSACTIONS',
+}
+
 export const GameweekContainer = () => {
   const { state, dispatch } = useStateContext();
   const { leagueState, leagueDispatch } = useLeagueContext();
   const [selectedGameweek, setSelectedGameweek] = useState<number | null>(null);
   const { game, players } = state;
   const { id, league_entries, matches, transactions } = leagueState;
+  const [activeTab, setActiveTab] = useState(TABS.MATCHES);
 
   useEffect(() => {
     if (game !== null) {
@@ -46,7 +53,8 @@ export const GameweekContainer = () => {
     matches === null ||
     selectedGameweek === null ||
     transactions === null ||
-    players === null
+    players === null ||
+    league_entries === null
   ) {
     return null;
   }
@@ -67,25 +75,47 @@ export const GameweekContainer = () => {
       <Center>
         <Heading size='xl'>Gameweek {selectedGameweek}</Heading>
       </Center>
-      <Grid templateColumns={['auto', 'auto', 'repeat(2, 1fr)']} gridGap={4}>
-        {currentMatches.map((m, i) => {
-          const away = _.find(
-            league_entries,
-            (le) => le.id === m.league_entry_1
-          );
-          const home = _.find(
-            league_entries,
-            (le) => le.id === m.league_entry_2
-          );
+      <Center>
+        <ButtonGroup variant='outline' isAttached>
+          <Button
+            isActive={activeTab === TABS.MATCHES}
+            onClick={() => setActiveTab(TABS.MATCHES)}>
+            Matches
+          </Button>
+          <Button
+            isActive={activeTab === TABS.TRANSACTIONS}
+            onClick={() => setActiveTab(TABS.TRANSACTIONS)}>
+            Transactions
+          </Button>
+        </ButtonGroup>
+      </Center>
+      {activeTab === TABS.MATCHES ? (
+        <Grid templateColumns={['auto', 'auto', 'repeat(2, 1fr)']} gridGap={4}>
+          {currentMatches.map((m, i) => {
+            const away = _.find(
+              league_entries,
+              (le) => le.id === m.league_entry_1
+            );
+            const home = _.find(
+              league_entries,
+              (le) => le.id === m.league_entry_2
+            );
 
-          if (away && home) {
-            return <Match key={i} away={away} home={home} match={m}></Match>;
-          }
+            if (away && home) {
+              return <Match key={i} away={away} home={home} match={m}></Match>;
+            }
 
-          return null;
-        })}
-      </Grid>
-      <Transactions transactions={currentTransactions} players={players} />
+            return null;
+          })}
+        </Grid>
+      ) : null}
+      {activeTab === TABS.TRANSACTIONS ? (
+        <Transactions
+          transactions={currentTransactions}
+          players={players}
+          leagueEntries={league_entries}
+        />
+      ) : null}
       <Flex align='flex' justifyContent='flex-end' pr={2}>
         <Select
           onChange={(e) => handleGameweekChange(parseInt(e.target.value, 10))}
