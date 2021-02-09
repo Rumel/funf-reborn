@@ -22,6 +22,7 @@ import { PromotionLine } from './promotionLine';
 import { RELEGATION_COLORS } from '../constants';
 import { useStateContext } from '../store';
 import { getTeamLink } from '../helpers/helpers';
+import { Form } from './form';
 
 const mobileDisplay = ['none', 'none', 'table-cell'];
 
@@ -30,15 +31,18 @@ export const Standings = () => {
   const { game } = state;
   const { leagueState, leagueDispatch } = useLeagueContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { id, league_entries, standings, advancement } = leagueState;
+  const { id, league_entries, standings, advancement, matches } = leagueState;
   const [modalLeagueEntry, setModalLeagueEntry] = useState<LeagueEntry>();
   const [modalStandingRow, setModalStandingRow] = useState<StandingRow>();
 
   useEffect(() => {
-    if ((league_entries === null || standings === null) && id !== null) {
+    if (
+      (league_entries === null || standings === null || matches === null) &&
+      id !== null
+    ) {
       setLeague(leagueDispatch, id);
     }
-  });
+  }, [league_entries, standings, matches, id, leagueDispatch]);
 
   useEffect(() => {
     if (game === null) {
@@ -50,7 +54,8 @@ export const Standings = () => {
     league_entries === null ||
     standings === null ||
     advancement === null ||
-    game === null
+    game === null ||
+    matches === null
   ) {
     return null;
   }
@@ -128,7 +133,7 @@ export const Standings = () => {
                         {leagueEntry.player_first_name}{' '}
                         {leagueEntry.player_last_name}
                       </Text>
-                      <Text fontSize='sm'>Form</Text>
+                      <Form leagueEntry={leagueEntry} matches={matches} />
                     </Stack>
                   </Td>
                   <Td display={mobileDisplay}>{standing.matches_won}</Td>

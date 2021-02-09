@@ -9,3 +9,9 @@ export const TRANSFER_COLORS = {
   ACCEPTED: 'green.200',
   DENIED: 'red.200',
 };
+
+export const FORM_COLORS = {
+  WIN: 'green.300',
+  DRAW: 'yellow.300',
+  LOSS: 'red.300',
+};
