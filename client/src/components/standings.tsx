@@ -93,30 +93,32 @@ export const Standings = () => {
       <VStack spacing='0.25rem' align='stretch'>
         <Table size='sm'>
           <Thead>
-            <Th>
-              <Center>#</Center>
-            </Th>
-            <Th>Club</Th>
-            <Th display={mobileDisplay}>
-              <Center>W</Center>
-            </Th>
-            <Th display={mobileDisplay}>
-              <Center>L</Center>
-            </Th>
-            <Th display={mobileDisplay}>
-              <Center>D</Center>
-            </Th>
-            <Th>
-              <Center>+</Center>
-            </Th>
-            <Th>
-              <Center>Pts</Center>
-            </Th>
-            <Th>
-              <Center>
-                <FaExternalLinkAlt />
-              </Center>
-            </Th>
+            <Tr>
+              <Th>
+                <Center>#</Center>
+              </Th>
+              <Th>Club</Th>
+              <Th display={mobileDisplay}>
+                <Center>W</Center>
+              </Th>
+              <Th display={mobileDisplay}>
+                <Center>L</Center>
+              </Th>
+              <Th display={mobileDisplay}>
+                <Center>D</Center>
+              </Th>
+              <Th>
+                <Center>+</Center>
+              </Th>
+              <Th>
+                <Center>Pts</Center>
+              </Th>
+              <Th>
+                <Center>
+                  <FaExternalLinkAlt />
+                </Center>
+              </Th>
+            </Tr>
           </Thead>
           <Tbody>
             {standings.map((standing) => {
