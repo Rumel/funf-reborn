@@ -12,6 +12,7 @@ import {
   useDisclosure,
   VStack,
   Link,
+  Center,
 } from '@chakra-ui/react';
 import _ from 'lodash';
 import { useLeagueContext } from '../leagueStore';
@@ -92,15 +93,29 @@ export const Standings = () => {
       <VStack spacing='0.25rem' align='stretch'>
         <Table size='sm'>
           <Thead>
-            <Th>#</Th>
-            <Th>Club</Th>
-            <Th display={mobileDisplay}>W</Th>
-            <Th display={mobileDisplay}>L</Th>
-            <Th display={mobileDisplay}>D</Th>
-            <Th>+</Th>
-            <Th>Pts</Th>
             <Th>
-              <FaExternalLinkAlt />
+              <Center>#</Center>
+            </Th>
+            <Th>Club</Th>
+            <Th display={mobileDisplay}>
+              <Center>W</Center>
+            </Th>
+            <Th display={mobileDisplay}>
+              <Center>L</Center>
+            </Th>
+            <Th display={mobileDisplay}>
+              <Center>D</Center>
+            </Th>
+            <Th>
+              <Center>+</Center>
+            </Th>
+            <Th>
+              <Center>Pts</Center>
+            </Th>
+            <Th>
+              <Center>
+                <FaExternalLinkAlt />
+              </Center>
             </Th>
           </Thead>
           <Tbody>
@@ -116,7 +131,9 @@ export const Standings = () => {
 
               return (
                 <Tr key={standing.rank} bgColor={getRowColor(standing.rank)}>
-                  <Td>{standing.rank}</Td>
+                  <Td>
+                    <Center>{standing.rank}</Center>
+                  </Td>
                   <Td>
                     <Stack spacing={1}>
                       <Link
@@ -137,13 +154,25 @@ export const Standings = () => {
                       <Form leagueEntry={leagueEntry} matches={matches} />
                     </Stack>
                   </Td>
-                  <Td display={mobileDisplay}>{standing.matches_won}</Td>
-                  <Td display={mobileDisplay}>{standing.matches_lost}</Td>
-                  <Td display={mobileDisplay}>{standing.matches_drawn}</Td>
-                  <Td>{standing.points_for}</Td>
-                  <Td>{standing.total}</Td>
+                  <Td display={mobileDisplay}>
+                    <Center>{standing.matches_won}</Center>
+                  </Td>
+                  <Td display={mobileDisplay}>
+                    <Center>{standing.matches_lost}</Center>
+                  </Td>
+                  <Td display={mobileDisplay}>
+                    <Center>{standing.matches_drawn}</Center>
+                  </Td>
+                  <Td>
+                    <Center>{standing.points_for}</Center>
+                  </Td>
+                  <Td>
+                    <Center>{standing.total}</Center>
+                  </Td>
                   <Td onClick={() => handleRowClick(leagueEntry, standing)}>
-                    <FaExternalLinkAlt />
+                    <Center>
+                      <FaExternalLinkAlt />
+                    </Center>
                   </Td>
                 </Tr>
               );
