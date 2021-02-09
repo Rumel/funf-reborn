@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
+  Button,
+  ButtonGroup,
   Center,
+  Heading,
   HStack,
   Image,
   Modal,
@@ -25,6 +28,12 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
 };
+
+enum TABS {
+  TEAM = 'TEAM',
+  MATCHES = 'MATCHES',
+  TRANSACTIONS = 'TRANSACTIONS',
+}
 
 const generateLine = (line: PlayerInfo[]) => {
   return (
@@ -52,6 +61,7 @@ export const TeamModal = (props: Props) => {
   const { leagueState, leagueDispatch } = useLeagueContext();
   const { picks } = leagueState;
   const { leagueEntry, standingRow, isOpen, onClose } = props;
+  const [activeTab, setActiveTab] = useState(TABS.TEAM);
 
   useEffect(() => {
     if (!players) {
@@ -99,12 +109,45 @@ export const TeamModal = (props: Props) => {
         <ModalHeader>{leagueEntry.entry_name}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <VStack spacing='0.5rem'>
-            {generateLine(keepers)}
-            {generateLine(defenders)}
-            {generateLine(midfielders)}
-            {generateLine(forwards)}
-            {generateLine(subs)}
+          <VStack align='stretch' padding={2}>
+            <Center>
+              <ButtonGroup variant='outline' isAttached>
+                <Button
+                  isActive={activeTab === TABS.TEAM}
+                  onClick={() => setActiveTab(TABS.TEAM)}>
+                  Team
+                </Button>
+                <Button
+                  isActive={activeTab === TABS.MATCHES}
+                  onClick={() => setActiveTab(TABS.MATCHES)}>
+                  Matches
+                </Button>
+                <Button
+                  isActive={activeTab === TABS.TRANSACTIONS}
+                  onClick={() => setActiveTab(TABS.TRANSACTIONS)}>
+                  Transactions
+                </Button>
+              </ButtonGroup>
+            </Center>
+            {activeTab === TABS.TEAM ? (
+              <VStack spacing='0.5rem'>
+                {generateLine(keepers)}
+                {generateLine(defenders)}
+                {generateLine(midfielders)}
+                {generateLine(forwards)}
+                {generateLine(subs)}
+              </VStack>
+            ) : null}
+            {activeTab === TABS.MATCHES ? (
+              <Center>
+                <Heading size='xl'>Not Yet Implemented</Heading>
+              </Center>
+            ) : null}
+            {activeTab === TABS.TRANSACTIONS ? (
+              <Center>
+                <Heading size='xl'>Not Yet Implemented</Heading>
+              </Center>
+            ) : null}
           </VStack>
         </ModalBody>
       </ModalContent>
