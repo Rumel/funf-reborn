@@ -2,7 +2,7 @@ import React from 'react';
 import { Center, Grid, Heading, VStack } from '@chakra-ui/react';
 import { LeagueEntry, Player, Transaction } from '../../types';
 import { generatePlayerInfo } from '../../helpers/generatePlayerInfo';
-import { GwTransactionBox } from './gwTransactionBox';
+import { TransactionBox } from '../shared/transactionBox';
 import _ from 'lodash';
 
 type Props = {
@@ -25,7 +25,7 @@ export const GwTransactions = ({
       <Grid
         templateColumns={['auto', 'repeat(2, 1fr)', 'repeat(3, 1fr)']}
         gridGap='2rem'>
-        {transactions.map((t) => {
+        {transactions.map((t, index) => {
           const inP = _.find(players, (p) => p.id === t.element_in);
           const outP = _.find(players, (p) => p.id === t.element_out);
           const team = _.find(leagueEntries, (le) => le.entry_id === t.entry);
@@ -35,11 +35,12 @@ export const GwTransactions = ({
             const outPlayer = generatePlayerInfo(outP);
 
             return (
-              <GwTransactionBox
+              <TransactionBox
                 inPlayer={inPlayer}
                 outPlayer={outPlayer}
                 transaction={t}
                 team={team}
+                key={index}
               />
             );
           } else {

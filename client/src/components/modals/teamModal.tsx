@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
-  Box,
   Button,
   ButtonGroup,
   Center,
-  HStack,
-  Image,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -14,12 +11,7 @@ import {
   ModalOverlay,
   VStack,
 } from '@chakra-ui/react';
-import { LeagueEntry, PlayerInfo, Position, StandingRow } from '../../types';
-import { useLeagueContext } from '../../leagueStore';
-import { useStateContext } from '../../store';
-import { setBootstrap, setGame, setPicks } from '../../service';
-import _ from 'lodash';
-import { generatePlayerInfoFromPick } from '../../helpers/generatePlayerInfo';
+import { LeagueEntry, StandingRow } from '../../types';
 import { TeamTransactions } from '../team/teamTransactions';
 import { TeamMatchContainer } from '../team/teamMatchContainer';
 import { Stats } from '../team/stats';
@@ -52,9 +44,15 @@ export const TeamModal = ({
   }
 
   return (
-    <Modal isOpen={isOpen} size='full' onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} scrollBehavior='inside'>
       <ModalOverlay />
-      <ModalContent my={0}>
+      <ModalContent
+        my={0}
+        maxW='100%'
+        w='100%'
+        maxH='100%'
+        h='100%'
+        borderRadius='none'>
         <ModalHeader>{leagueEntry.entry_name}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
@@ -88,7 +86,9 @@ export const TeamModal = ({
             ) : null}
             {activeTab === TABS.STATS ? <Stats /> : null}
             {activeTab === TABS.MATCHES ? <TeamMatchContainer /> : null}
-            {activeTab === TABS.TRANSACTIONS ? <TeamTransactions /> : null}
+            {activeTab === TABS.TRANSACTIONS ? (
+              <TeamTransactions leagueEntry={leagueEntry} />
+            ) : null}
           </VStack>
         </ModalBody>
       </ModalContent>

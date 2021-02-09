@@ -9,7 +9,7 @@ type Props = {
   inPlayer: PlayerInfo;
   outPlayer: PlayerInfo;
   transaction: Transaction;
-  team: LeagueEntry;
+  team?: LeagueEntry;
 };
 
 export const getBackgroundColor = (transaction: Transaction): string => {
@@ -20,7 +20,7 @@ export const getBackgroundColor = (transaction: Transaction): string => {
   return TRANSFER_COLORS.DENIED;
 };
 
-export const GwTransactionBox = ({
+export const TransactionBox = ({
   inPlayer,
   outPlayer,
   transaction,
@@ -49,9 +49,11 @@ export const GwTransactionBox = ({
           <GrClose />
         </Center>
       ) : null}
-      <Center>
-        <Heading size='l'>{team.entry_name}</Heading>
-      </Center>
+      {team ? (
+        <Center>
+          <Heading size='l'>{team.entry_name}</Heading>
+        </Center>
+      ) : null}
     </Box>
   );
 };
