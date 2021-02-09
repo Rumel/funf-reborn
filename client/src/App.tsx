@@ -1,9 +1,10 @@
-import { Container, Stack } from '@chakra-ui/react';
+import { Center, Container, Link, Stack, Text } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { League } from './components/league';
 import LeagueStore from './leagueStore';
 import { setBootstrap, setGame } from './service';
 import { useStateContext } from './store';
+import { FaAws, FaGithub } from 'react-icons/fa';
 
 function App() {
   const { state, dispatch } = useStateContext();
@@ -28,7 +29,7 @@ function App() {
   });
 
   return (
-    <Container maxW='4xl'>
+    <Container maxW='4xl' pt={4} pb={4}>
       <Stack spacing={3}>
         <LeagueStore
           id={11831}
@@ -50,6 +51,16 @@ function App() {
           }}>
           <League />
         </LeagueStore>
+        <Center>
+          <FaAws size='2rem' />
+          <Text pl={4}>Powered by AWS Lambda</Text>
+        </Center>
+        <Center>
+          <FaGithub size='2rem' />
+          <Link external pl={4} href='https://github.com/Rumel/funf-reborn'>
+            <Text>Source Code</Text>
+          </Link>
+        </Center>
       </Stack>
     </Container>
   );
