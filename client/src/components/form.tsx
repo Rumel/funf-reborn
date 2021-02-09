@@ -15,10 +15,10 @@ enum RESULT {
   DRAW = 'DRAW',
 }
 
-export const renderFormBox = (letter: string, color: string, id: number) => {
+export const renderFormBox = (letter: string, color: string, index: number) => {
   return (
     <Box
-      key={id}
+      key={index}
       bg={color}
       paddingLeft={1}
       paddingRight={1}
@@ -66,16 +66,16 @@ export const Form = ({ matches, leagueEntry }: Props) => {
 
   return (
     <HStack>
-      {teamMatches.map((m) => {
+      {teamMatches.map((m, index) => {
         const { id } = leagueEntry;
         const result = getMatchResult(m, id);
 
         if (result === RESULT.WIN) {
-          return renderFormBox('W', FORM_COLORS.WIN, id);
+          return renderFormBox('W', FORM_COLORS.WIN, index);
         } else if (result === RESULT.DRAW) {
-          return renderFormBox('D', FORM_COLORS.DRAW, id);
+          return renderFormBox('D', FORM_COLORS.DRAW, index);
         } else {
-          return renderFormBox('L', FORM_COLORS.LOSS, id);
+          return renderFormBox('L', FORM_COLORS.LOSS, index);
         }
       })}
     </HStack>
