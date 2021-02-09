@@ -23,6 +23,7 @@ import { generatePlayerInfoFromPick } from '../../helpers/generatePlayerInfo';
 import { TeamTransactions } from '../team/teamTransactions';
 import { TeamMatchContainer } from '../team/teamMatchContainer';
 import { Stats } from '../team/stats';
+import { TeamLayout } from '../team/teamLayout';
 
 type Props = {
   leagueEntry: LeagueEntry | undefined;
@@ -38,72 +39,17 @@ enum TABS {
   TRANSACTIONS = 'TRANSACTIONS',
 }
 
-const generateLine = (line: PlayerInfo[]) => {
-  return (
-    <Center>
-      <HStack spacing='1rem'>
-        {line.map((p) => {
-          return (
-            <Box key={p.id}>
-              <VStack spacing='0.25rem'>
-                <Image w='45px' src={p.url} alt={p.name} />
-                <p>{p.webName}</p>
-                <p>{p.form}</p>
-              </VStack>
-            </Box>
-          );
-        })}
-      </HStack>
-    </Center>
-  );
-};
-
-export const TeamModal = (props: Props) => {
-  const { state, dispatch } = useStateContext();
-  const { game, players } = state;
-  const { leagueState, leagueDispatch } = useLeagueContext();
-  const { picks } = leagueState;
-  const { leagueEntry, standingRow, isOpen, onClose } = props;
+export const TeamModal = ({
+  leagueEntry,
+  standingRow,
+  isOpen,
+  onClose,
+}: Props) => {
   const [activeTab, setActiveTab] = useState(TABS.TEAM);
 
-  useEffect(() => {
-    if (!players) {
-      setBootstrap(dispatch);
-    }
-  }, [players, dispatch]);
-
-  useEffect(() => {
-    if (leagueEntry && standingRow) {
-      if (game) {
-        if (!picks[`${leagueEntry.entry_id}-${game.current_event}`]) {
-          setPicks(leagueDispatch, leagueEntry.entry_id, game.current_event);
-        }
-      } else {
-        setGame(dispatch);
-      }
-    }
-  }, [leagueEntry, standingRow, game, picks, dispatch, leagueDispatch]);
-
-  if (!(leagueEntry && standingRow && game && players)) {
+  if (leagueEntry === undefined || standingRow === undefined) {
     return null;
   }
-
-  if (!picks[`${leagueEntry.entry_id}-${game.current_event}`]) {
-    return null;
-  }
-
-  const teamPicks = picks[`${leagueEntry.entry_id}-${game.current_event}`];
-  const teamPlayers = teamPicks.picks
-    .filter((p) => p.position < 12)
-    .map((p) => generatePlayerInfoFromPick(p, players));
-  const subs = teamPicks.picks
-    .filter((p) => p.position > 11)
-    .map((p) => generatePlayerInfoFromPick(p, players));
-
-  const keepers = _.filter(teamPlayers, (p) => p.position === Position.GKP);
-  const defenders = _.filter(teamPlayers, (p) => p.position === Position.DEF);
-  const midfielders = _.filter(teamPlayers, (p) => p.position === Position.MID);
-  const forwards = _.filter(teamPlayers, (p) => p.position === Position.FWD);
 
   return (
     <Modal isOpen={isOpen} size='full' onClose={onClose}>
@@ -138,14 +84,7 @@ export const TeamModal = (props: Props) => {
               </ButtonGroup>
             </Center>
             {activeTab === TABS.TEAM ? (
-              // Refactor this to it's own component
-              <VStack spacing='0.5rem'>
-                {generateLine(keepers)}
-                {generateLine(defenders)}
-                {generateLine(midfielders)}
-                {generateLine(forwards)}
-                {generateLine(subs)}
-              </VStack>
+              <TeamLayout leagueEntry={leagueEntry} standingRow={standingRow} />
             ) : null}
             {activeTab === TABS.STATS ? <Stats /> : null}
             {activeTab === TABS.MATCHES ? <TeamMatchContainer /> : null}
