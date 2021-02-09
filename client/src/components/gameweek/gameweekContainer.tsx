@@ -4,18 +4,17 @@ import {
   ButtonGroup,
   Center,
   Flex,
-  Grid,
   Heading,
   Select,
   VStack,
 } from '@chakra-ui/react';
 
-import { Match } from './match';
-import { useStateContext } from '../store';
-import { useLeagueContext } from '../leagueStore';
+import { useStateContext } from '../../store';
+import { useLeagueContext } from '../../leagueStore';
 import _ from 'lodash';
-import { Transactions } from './transactions';
-import { setBootstrap, setTransactions } from '../service';
+import { GwTransactions } from './gwTransactions';
+import { setBootstrap, setTransactions } from '../../service';
+import { GwMatchContainer } from './gwMatchContainer';
 
 enum TABS {
   MATCHES = 'MATCHES',
@@ -90,27 +89,13 @@ export const GameweekContainer = () => {
         </ButtonGroup>
       </Center>
       {activeTab === TABS.MATCHES ? (
-        <Grid templateColumns={['auto', 'auto', 'repeat(2, 1fr)']} gridGap={4}>
-          {currentMatches.map((m, i) => {
-            const away = _.find(
-              league_entries,
-              (le) => le.id === m.league_entry_1
-            );
-            const home = _.find(
-              league_entries,
-              (le) => le.id === m.league_entry_2
-            );
-
-            if (away && home) {
-              return <Match key={i} away={away} home={home} match={m}></Match>;
-            }
-
-            return null;
-          })}
-        </Grid>
+        <GwMatchContainer
+          leagueEntries={league_entries}
+          matches={currentMatches}
+        />
       ) : null}
       {activeTab === TABS.TRANSACTIONS ? (
-        <Transactions
+        <GwTransactions
           transactions={currentTransactions}
           players={players}
           leagueEntries={league_entries}

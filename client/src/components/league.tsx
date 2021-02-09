@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Box, Center, Heading, VStack } from '@chakra-ui/react';
 
 import { Standings } from './standings';
-import { GameweekContainer } from './gameweekContainer';
+import { GameweekContainer } from './gameweek/gameweekContainer';
 import { setLeague } from '../service';
 import { FunfSpinner } from './shared/funfSpinner';
 import { useLeagueContext } from '../leagueStore';

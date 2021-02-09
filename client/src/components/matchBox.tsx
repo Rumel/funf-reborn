@@ -9,7 +9,7 @@ type Props = {
   match: MatchType;
 };
 
-export const Match = (props: Props) => {
+export const MatchBox = (props: Props) => {
   const { away, home, match } = props;
 
   return (

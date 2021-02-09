@@ -1,8 +1,8 @@
 import React from 'react';
 import { Center, Grid, Heading, VStack } from '@chakra-ui/react';
-import { LeagueEntry, Player, Transaction } from '../types';
-import { generatePlayerInfo } from '../helpers/generatePlayerInfo';
-import { TransactionBox } from './transactionBox';
+import { LeagueEntry, Player, Transaction } from '../../types';
+import { generatePlayerInfo } from '../../helpers/generatePlayerInfo';
+import { GwTransactionBox } from './gwTransactionBox';
 import _ from 'lodash';
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
   leagueEntries: LeagueEntry[];
 };
 
-export const Transactions = ({
+export const GwTransactions = ({
   transactions,
   players,
   leagueEntries,
@@ -35,7 +35,7 @@ export const Transactions = ({
             const outPlayer = generatePlayerInfo(outP);
 
             return (
-              <TransactionBox
+              <GwTransactionBox
                 inPlayer={inPlayer}
                 outPlayer={outPlayer}
                 transaction={t}

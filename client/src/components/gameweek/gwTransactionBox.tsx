@@ -1,9 +1,9 @@
 import { Box, Center, Flex, Heading, Image, VStack } from '@chakra-ui/react';
 import React from 'react';
-import { LeagueEntry, PlayerInfo, Transaction } from '../types';
+import { LeagueEntry, PlayerInfo, Transaction } from '../../types';
 import { FaArrowDown, FaTrashAlt } from 'react-icons/fa';
 import { GrClose } from 'react-icons/gr';
-import { TRANSFER_COLORS } from '../constants';
+import { TRANSFER_COLORS } from '../../constants';
 
 type Props = {
   inPlayer: PlayerInfo;
@@ -20,7 +20,7 @@ export const getBackgroundColor = (transaction: Transaction): string => {
   return TRANSFER_COLORS.DENIED;
 };
 
-export const TransactionBox = ({
+export const GwTransactionBox = ({
   inPlayer,
   outPlayer,
   transaction,
