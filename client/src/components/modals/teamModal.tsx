@@ -4,7 +4,6 @@ import {
   Button,
   ButtonGroup,
   Center,
-  Heading,
   HStack,
   Image,
   Modal,
@@ -21,6 +20,9 @@ import { useStateContext } from '../../store';
 import { setBootstrap, setGame, setPicks } from '../../service';
 import _ from 'lodash';
 import { generatePlayerInfoFromPick } from '../../helpers/generatePlayerInfo';
+import { TeamTransactions } from '../team/teamTransactions';
+import { TeamMatchContainer } from '../team/teamMatchContainer';
+import { Stats } from '../team/stats';
 
 type Props = {
   leagueEntry: LeagueEntry | undefined;
@@ -31,6 +33,7 @@ type Props = {
 
 enum TABS {
   TEAM = 'TEAM',
+  STATS = 'STATS',
   MATCHES = 'MATCHES',
   TRANSACTIONS = 'TRANSACTIONS',
 }
@@ -118,6 +121,11 @@ export const TeamModal = (props: Props) => {
                   Team
                 </Button>
                 <Button
+                  isActive={activeTab === TABS.STATS}
+                  onClick={() => setActiveTab(TABS.STATS)}>
+                  Stats
+                </Button>
+                <Button
                   isActive={activeTab === TABS.MATCHES}
                   onClick={() => setActiveTab(TABS.MATCHES)}>
                   Matches
@@ -130,6 +138,7 @@ export const TeamModal = (props: Props) => {
               </ButtonGroup>
             </Center>
             {activeTab === TABS.TEAM ? (
+              // Refactor this to it's own component
               <VStack spacing='0.5rem'>
                 {generateLine(keepers)}
                 {generateLine(defenders)}
@@ -138,16 +147,9 @@ export const TeamModal = (props: Props) => {
                 {generateLine(subs)}
               </VStack>
             ) : null}
-            {activeTab === TABS.MATCHES ? (
-              <Center>
-                <Heading size='xl'>Not Yet Implemented</Heading>
-              </Center>
-            ) : null}
-            {activeTab === TABS.TRANSACTIONS ? (
-              <Center>
-                <Heading size='xl'>Not Yet Implemented</Heading>
-              </Center>
-            ) : null}
+            {activeTab === TABS.STATS ? <Stats /> : null}
+            {activeTab === TABS.MATCHES ? <TeamMatchContainer /> : null}
+            {activeTab === TABS.TRANSACTIONS ? <TeamTransactions /> : null}
           </VStack>
         </ModalBody>
       </ModalContent>
