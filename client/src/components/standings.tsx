@@ -23,6 +23,7 @@ import { RELEGATION_COLORS } from '../constants';
 import { useStateContext } from '../store';
 import { getTeamLink } from '../helpers/helpers';
 import { Form } from './form';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 
 const mobileDisplay = ['none', 'none', 'table-cell'];
 
@@ -89,7 +90,7 @@ export const Standings = () => {
         onClose={onClose}
       />
       <VStack spacing='0.25rem' align='stretch'>
-        <Table>
+        <Table size='sm'>
           <Thead>
             <Th>#</Th>
             <Th>Club</Th>
@@ -98,6 +99,9 @@ export const Standings = () => {
             <Th display={mobileDisplay}>D</Th>
             <Th>+</Th>
             <Th>Pts</Th>
+            <Th>
+              <FaExternalLinkAlt />
+            </Th>
           </Thead>
           <Tbody>
             {standings.map((standing) => {
@@ -111,10 +115,7 @@ export const Standings = () => {
               }
 
               return (
-                <Tr
-                  key={standing.rank}
-                  onClick={() => handleRowClick(leagueEntry, standing)}
-                  bgColor={getRowColor(standing.rank)}>
+                <Tr key={standing.rank} bgColor={getRowColor(standing.rank)}>
                   <Td>{standing.rank}</Td>
                   <Td>
                     <Stack spacing={1}>
@@ -141,6 +142,9 @@ export const Standings = () => {
                   <Td display={mobileDisplay}>{standing.matches_drawn}</Td>
                   <Td>{standing.points_for}</Td>
                   <Td>{standing.total}</Td>
+                  <Td onClick={() => handleRowClick(leagueEntry, standing)}>
+                    <FaExternalLinkAlt />
+                  </Td>
                 </Tr>
               );
             })}
