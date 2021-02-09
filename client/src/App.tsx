@@ -4,7 +4,6 @@ import { League } from './components/league';
 import LeagueStore from './leagueStore';
 import { setBootstrap, setGame } from './service';
 import { useStateContext } from './store';
-import { Advancement } from './types';
 
 function App() {
   const { state, dispatch } = useStateContext();
