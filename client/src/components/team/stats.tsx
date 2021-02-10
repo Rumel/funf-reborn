@@ -4,13 +4,14 @@ import {
   Container,
   Flex,
   Heading,
+  ThemingProps,
   Tooltip,
   VStack,
 } from '@chakra-ui/react';
 import { LeagueEntry } from '../../types';
 import { useLeagueContext } from '../../leagueStore';
 import { FunfSpinner } from '../shared/funfSpinner';
-import { setLeague } from '../../service';
+import { setLeague, setTransactions } from '../../service';
 import _ from 'lodash';
 import * as ss from 'simple-statistics';
 
@@ -21,13 +22,14 @@ type Props = {
 const renderStatBox = (
   stat: string,
   value: string | number,
-  tooltip?: string | undefined
+  tooltip?: string | undefined,
+  size?: '4xl' | '3xl' | '2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' | undefined
 ) => {
   return (
     <VStack>
       <Tooltip label={tooltip} placement='top'>
         <Heading
-          size='lg'
+          size={size ? size : 'lg'}
           pl={2}
           pr={2}
           pb={2}
@@ -42,7 +44,7 @@ const renderStatBox = (
 
 export const Stats = ({ team }: Props) => {
   const { leagueState, leagueDispatch } = useLeagueContext();
-  const { id, matches, standings } = leagueState;
+  const { id, matches, standings, transactions } = leagueState;
 
   useEffect(() => {
     if ((matches === null || standings === null) && id !== null) {
@@ -50,7 +52,13 @@ export const Stats = ({ team }: Props) => {
     }
   }, [matches, standings, id, leagueDispatch]);
 
-  if (matches === null || standings === null) {
+  useEffect(() => {
+    if (transactions === null && id !== null) {
+      setTransactions(leagueDispatch, id);
+    }
+  }, [transactions, id, leagueDispatch]);
+
+  if (matches === null || standings === null || transactions === null) {
     return <FunfSpinner />;
   }
 
@@ -82,6 +90,10 @@ export const Stats = ({ team }: Props) => {
   const low = ss.min(teamPoints);
   const high = ss.max(teamPoints);
 
+  const transfers = _.filter(transactions, (t) => t.entry === team.entry_id);
+  const acceptedTransfers = _.filter(transfers, (t) => t.result === 'a').length;
+  const failedTransfers = _.filter(transfers, (t) => t.result !== 'a').length;
+
   return (
     <Center>
       <Container size='xl'>
@@ -101,6 +113,20 @@ export const Stats = ({ team }: Props) => {
           <Flex align='stretch' justify='space-around'>
             {renderStatBox('High', high, 'Highest Match Points')}
             {renderStatBox('Low', low, 'Lowest Match Points')}
+          </Flex>
+          <Flex align='stretch' justify='space-around'>
+            {renderStatBox(
+              'Transfers',
+              acceptedTransfers,
+              'Accepted Transfers In',
+              'md'
+            )}
+            {renderStatBox(
+              'Failed Transfers',
+              failedTransfers,
+              'Failed Transfers',
+              'md'
+            )}
           </Flex>
         </VStack>
       </Container>

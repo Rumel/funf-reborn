@@ -57,7 +57,7 @@ function App() {
         </Center>
         <Center>
           <FaGithub size='2rem' />
-          <Link external pl={4} href='https://github.com/Rumel/funf-reborn'>
+          <Link isExternal pl={4} href='https://github.com/Rumel/funf-reborn'>
             <Text>Source Code</Text>
           </Link>
         </Center>
