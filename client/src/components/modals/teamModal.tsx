@@ -90,7 +90,7 @@ export const TeamModal = ({
                     standingRow={standingRow}
                   />
                 ) : null}
-                {activeTab === TABS.STATS ? <Stats /> : null}
+                {activeTab === TABS.STATS ? <Stats team={leagueEntry} /> : null}
                 {activeTab === TABS.MATCHES ? (
                   <TeamMatchContainer team={leagueEntry} />
                 ) : null}
