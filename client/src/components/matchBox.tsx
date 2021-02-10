@@ -7,13 +7,12 @@ type Props = {
   away: LeagueEntry;
   home: LeagueEntry;
   match: MatchType;
+  color?: string;
 };
 
-export const MatchBox = (props: Props) => {
-  const { away, home, match } = props;
-
+export const MatchBox = ({ away, home, match, color }: Props) => {
   return (
-    <Box border='1px solid black' margin={1} borderRadius='0.5rem'>
+    <Box border='1px solid black' margin={1} borderRadius='0.5rem' bg={color}>
       <Box padding={2}>
         <Box display='flex'>
           <Box flexGrow={1}>

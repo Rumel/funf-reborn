@@ -15,3 +15,5 @@ export const FORM_COLORS = {
   DRAW: 'yellow.300',
   LOSS: 'red.300',
 };
+
+export const MATCH_RESULT_COLORS = FORM_COLORS;

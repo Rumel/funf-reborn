@@ -3,6 +3,7 @@ import {
   Button,
   ButtonGroup,
   Center,
+  Container,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -56,40 +57,49 @@ export const TeamModal = ({
         <ModalHeader>{leagueEntry.entry_name}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <VStack align='stretch' padding={2}>
-            <Center>
-              <ButtonGroup variant='outline' isAttached>
-                <Button
-                  isActive={activeTab === TABS.TEAM}
-                  onClick={() => setActiveTab(TABS.TEAM)}>
-                  Team
-                </Button>
-                <Button
-                  isActive={activeTab === TABS.STATS}
-                  onClick={() => setActiveTab(TABS.STATS)}>
-                  Stats
-                </Button>
-                <Button
-                  isActive={activeTab === TABS.MATCHES}
-                  onClick={() => setActiveTab(TABS.MATCHES)}>
-                  Matches
-                </Button>
-                <Button
-                  isActive={activeTab === TABS.TRANSACTIONS}
-                  onClick={() => setActiveTab(TABS.TRANSACTIONS)}>
-                  Transactions
-                </Button>
-              </ButtonGroup>
-            </Center>
-            {activeTab === TABS.TEAM ? (
-              <TeamLayout leagueEntry={leagueEntry} standingRow={standingRow} />
-            ) : null}
-            {activeTab === TABS.STATS ? <Stats /> : null}
-            {activeTab === TABS.MATCHES ? <TeamMatchContainer /> : null}
-            {activeTab === TABS.TRANSACTIONS ? (
-              <TeamTransactions leagueEntry={leagueEntry} />
-            ) : null}
-          </VStack>
+          <Center>
+            <Container maxW='4xl'>
+              <VStack align='stretch' padding={2}>
+                <Center>
+                  <ButtonGroup variant='outline' isAttached>
+                    <Button
+                      isActive={activeTab === TABS.TEAM}
+                      onClick={() => setActiveTab(TABS.TEAM)}>
+                      Team
+                    </Button>
+                    <Button
+                      isActive={activeTab === TABS.STATS}
+                      onClick={() => setActiveTab(TABS.STATS)}>
+                      Stats
+                    </Button>
+                    <Button
+                      isActive={activeTab === TABS.MATCHES}
+                      onClick={() => setActiveTab(TABS.MATCHES)}>
+                      Matches
+                    </Button>
+                    <Button
+                      isActive={activeTab === TABS.TRANSACTIONS}
+                      onClick={() => setActiveTab(TABS.TRANSACTIONS)}>
+                      Transactions
+                    </Button>
+                  </ButtonGroup>
+                </Center>
+                {activeTab === TABS.TEAM ? (
+                  <TeamLayout
+                    leagueEntry={leagueEntry}
+                    standingRow={standingRow}
+                  />
+                ) : null}
+                {activeTab === TABS.STATS ? <Stats /> : null}
+                {activeTab === TABS.MATCHES ? (
+                  <TeamMatchContainer team={leagueEntry} />
+                ) : null}
+                {activeTab === TABS.TRANSACTIONS ? (
+                  <TeamTransactions leagueEntry={leagueEntry} />
+                ) : null}
+              </VStack>
+            </Container>
+          </Center>
         </ModalBody>
       </ModalContent>
     </Modal>
