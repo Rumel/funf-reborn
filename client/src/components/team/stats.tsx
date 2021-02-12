@@ -1,13 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  Center,
-  Container,
-  Flex,
-  Heading,
-  ThemingProps,
-  Tooltip,
-  VStack,
-} from '@chakra-ui/react';
+import { Center, Flex, Grid, Heading, VStack } from '@chakra-ui/react';
 import { LeagueEntry } from '../../types';
 import { useLeagueContext } from '../../leagueStore';
 import { FunfSpinner } from '../shared/funfSpinner';
@@ -19,25 +11,45 @@ type Props = {
   team: LeagueEntry;
 };
 
-const renderStatBox = (
-  stat: string,
-  value: string | number,
-  tooltip?: string | undefined,
+const renderStatLabel = (
+  label: string,
   size?: '4xl' | '3xl' | '2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' | undefined
 ) => {
   return (
-    <VStack>
-      <Tooltip label={tooltip} placement='top'>
-        <Heading
-          size={size ? size : 'lg'}
-          pl={2}
-          pr={2}
-          pb={2}
-          borderBottom='0.1rem solid black'>
-          {stat}
-        </Heading>
-      </Tooltip>
-      <Heading size='xl'>{value}</Heading>
+    <Flex align='stretch' flexFlow='row-reverse'>
+      <Heading size={size ? size : 'md'}>{label} |</Heading>
+    </Flex>
+  );
+};
+
+const renderStat = (
+  stat: string | number,
+  size?: '4xl' | '3xl' | '2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' | undefined
+) => {
+  return (
+    <Flex align='stretch' flexFlow='row' pl={2}>
+      <Heading size={size ? size : 'md'}>{stat}</Heading>
+    </Flex>
+  );
+};
+
+const renderStatBox = (
+  heading: string,
+  stats: { stat: string | number; label: string }[]
+) => {
+  return (
+    <VStack align='stretch'>
+      <Center>
+        <Heading size='2xl'>{heading}</Heading>
+      </Center>
+      <Grid gridTemplateColumns='repeat(2, 1fr)'>
+        {stats.map((item, index) => (
+          <React.Fragment key={index}>
+            {renderStatLabel(item.label)}
+            {renderStat(item.stat)}
+          </React.Fragment>
+        ))}
+      </Grid>
     </VStack>
   );
 };
@@ -68,8 +80,6 @@ export const Stats = ({ team }: Props) => {
     return null;
   }
 
-  console.log(standingRow);
-
   const teamMatches = _.filter(
     matches,
     (m) =>
@@ -95,41 +105,28 @@ export const Stats = ({ team }: Props) => {
   const failedTransfers = _.filter(transfers, (t) => t.result !== 'a').length;
 
   return (
-    <Center>
-      <Container size='xl'>
-        <VStack spacing={8} align='stretch'>
-          <Flex align='stretch' justify='space-around'>
-            {renderStatBox('W', standingRow.matches_won, 'Wins')}
-            {renderStatBox('L', standingRow.matches_lost, 'Losses')}
-            {renderStatBox('D', standingRow.matches_drawn, 'Draws')}
-            {renderStatBox('Pts', standingRow.total, 'Total Points')}
-          </Flex>
-          <Flex align='stretch' justify='space-around'>
-            {renderStatBox('Avg', average, 'Average of Match Points')}
-            {renderStatBox('Med', median, 'Median of Match Points')}
-            {renderStatBox('Mode', mode, 'Mode of Match Points')}
-            {renderStatBox('SD', stdv, 'Standard Deviation of Match Points')}
-          </Flex>
-          <Flex align='stretch' justify='space-around'>
-            {renderStatBox('High', high, 'Highest Match Points')}
-            {renderStatBox('Low', low, 'Lowest Match Points')}
-          </Flex>
-          <Flex align='stretch' justify='space-around'>
-            {renderStatBox(
-              'Transfers',
-              acceptedTransfers,
-              'Accepted Transfers In',
-              'md'
-            )}
-            {renderStatBox(
-              'Failed Transfers',
-              failedTransfers,
-              'Failed Transfers',
-              'md'
-            )}
-          </Flex>
-        </VStack>
-      </Container>
-    </Center>
+    <VStack align='stretch' spacing={4}>
+      {renderStatBox('League Stats', [
+        { label: 'Rank', stat: standingRow.rank },
+        { label: 'Wins', stat: standingRow.matches_won },
+        { label: 'Losses', stat: standingRow.matches_lost },
+        { label: 'Draws', stat: standingRow.matches_drawn },
+        { label: 'Pts For', stat: standingRow.points_for },
+        { label: 'Pts Against', stat: standingRow.points_against },
+        { label: 'Team Pts', stat: standingRow.total },
+      ])}
+      {renderStatBox('Match Stats', [
+        { label: 'Average', stat: average },
+        { label: 'Median', stat: median },
+        { label: 'Mode', stat: mode },
+        { label: 'Std. Dev.', stat: stdv },
+        { label: 'High', stat: high },
+        { label: 'Low', stat: low },
+      ])}
+      {renderStatBox('Transfers', [
+        { label: 'Accepted', stat: acceptedTransfers },
+        { label: 'Failed', stat: failedTransfers },
+      ])}
+    </VStack>
   );
 };
