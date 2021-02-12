@@ -40,21 +40,21 @@ export const TeamTransactions = ({ leagueEntry }: Props) => {
     (t) => t.entry === leagueEntry.entry_id
   );
 
-  console.log(teamTransactions);
   const transactionsByWeek = _.groupBy(teamTransactions, 'event');
   const weeks = _.reverse(Object.entries(transactionsByWeek));
-  console.log(weeks);
 
   return (
     <Box>
       {weeks.map(([w, transfers], index) => {
+        const sortedTransfers = _.sortBy(transfers, 'index');
+
         return (
           <VStack align='stretch' key={index}>
             <Heading>Gameweek {w}</Heading>
             <Grid
               templateColumns={['auto', 'repeat(2, 1fr)', 'repeat(3, 1fr)']}
               gridGap='2rem'>
-              {transfers.map((t, index) => {
+              {sortedTransfers.map((t, index) => {
                 const inP = _.find(players, (p) => p.id === t.element_in);
                 const outP = _.find(players, (p) => p.id === t.element_out);
 

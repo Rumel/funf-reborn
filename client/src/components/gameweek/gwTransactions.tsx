@@ -16,7 +16,8 @@ export const GwTransactions = ({
   players,
   leagueEntries,
 }: Props) => {
-  console.log(transactions);
+  const sortedTransactions = _.sortBy(transactions, 'index');
+
   return (
     <VStack align='stretch'>
       <Center>
@@ -25,7 +26,7 @@ export const GwTransactions = ({
       <Grid
         templateColumns={['auto', 'repeat(2, 1fr)', 'repeat(3, 1fr)']}
         gridGap='2rem'>
-        {transactions.map((t, index) => {
+        {sortedTransactions.map((t, index) => {
           const inP = _.find(players, (p) => p.id === t.element_in);
           const outP = _.find(players, (p) => p.id === t.element_out);
           const team = _.find(leagueEntries, (le) => le.entry_id === t.entry);
