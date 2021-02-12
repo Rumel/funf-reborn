@@ -1,5 +1,13 @@
 import React, { useEffect } from 'react';
-import { Box, Center, HStack, Image, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  Center,
+  HStack,
+  Image,
+  Text,
+  useBreakpointValue,
+  VStack,
+} from '@chakra-ui/react';
 import { LeagueEntry, PlayerInfo, Position, StandingRow } from '../../types';
 import { useStateContext } from '../../store';
 import { useLeagueContext } from '../../leagueStore';
@@ -12,7 +20,11 @@ type Props = {
   standingRow: StandingRow;
 };
 
-const generateLine = (line: PlayerInfo[]) => {
+const generateLine = (
+  line: PlayerInfo[],
+  imageWidth: string | undefined,
+  textHeight: string | undefined
+) => {
   return (
     <Center>
       <HStack spacing='1rem'>
@@ -20,9 +32,9 @@ const generateLine = (line: PlayerInfo[]) => {
           return (
             <Box key={p.id}>
               <VStack spacing='0.25rem'>
-                <Image w='45px' src={p.url} alt={p.name} />
-                <p>{p.webName}</p>
-                <p>{p.form}</p>
+                <Image w={imageWidth} src={p.url} alt={p.name} />
+                <Text size={textHeight}>{p.webName}</Text>
+                <Text size={textHeight}>{p.form}</Text>
               </VStack>
             </Box>
           );
@@ -37,6 +49,8 @@ export const TeamLayout = ({ leagueEntry, standingRow }: Props) => {
   const { game, players } = state;
   const { leagueState, leagueDispatch } = useLeagueContext();
   const { picks } = leagueState;
+  const imageWidth = useBreakpointValue({ base: '2.5em', md: '3.5em' });
+  const textHeight = useBreakpointValue({ base: '0.75rem', md: '1rem' });
 
   useEffect(() => {
     if (!players) {
@@ -77,11 +91,11 @@ export const TeamLayout = ({ leagueEntry, standingRow }: Props) => {
 
   return (
     <VStack spacing='0.5rem'>
-      {generateLine(keepers)}
-      {generateLine(defenders)}
-      {generateLine(midfielders)}
-      {generateLine(forwards)}
-      {generateLine(subs)}
+      {generateLine(keepers, imageWidth, textHeight)}
+      {generateLine(defenders, imageWidth, textHeight)}
+      {generateLine(midfielders, imageWidth, textHeight)}
+      {generateLine(forwards, imageWidth, textHeight)}
+      {generateLine(subs, imageWidth, textHeight)}
     </VStack>
   );
 };

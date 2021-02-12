@@ -10,6 +10,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  useBreakpointValue,
   VStack,
 } from '@chakra-ui/react';
 import { LeagueEntry, StandingRow } from '../../types';
@@ -39,6 +40,7 @@ export const TeamModal = ({
   onClose,
 }: Props) => {
   const [activeTab, setActiveTab] = useState(TABS.TEAM);
+  const buttonSize = useBreakpointValue({ base: 'sm', md: 'md' });
 
   if (leagueEntry === undefined || standingRow === undefined) {
     return null;
@@ -61,7 +63,7 @@ export const TeamModal = ({
             <Container maxW='4xl'>
               <VStack align='stretch' padding={2}>
                 <Center>
-                  <ButtonGroup variant='outline' isAttached>
+                  <ButtonGroup variant='outline' isAttached size={buttonSize}>
                     <Button
                       isActive={activeTab === TABS.TEAM}
                       onClick={() => setActiveTab(TABS.TEAM)}>

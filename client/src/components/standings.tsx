@@ -107,7 +107,7 @@ export const Standings = () => {
               <Th display={mobileDisplay}>
                 <Center>D</Center>
               </Th>
-              <Th>
+              <Th display={mobileDisplay}>
                 <Center>+</Center>
               </Th>
               <Th>
@@ -165,7 +165,7 @@ export const Standings = () => {
                   <Td display={mobileDisplay}>
                     <Center>{standing.matches_drawn}</Center>
                   </Td>
-                  <Td>
+                  <Td display={mobileDisplay}>
                     <Center>{standing.points_for}</Center>
                   </Td>
                   <Td>
