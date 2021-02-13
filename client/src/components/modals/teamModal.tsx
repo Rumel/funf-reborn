@@ -47,7 +47,13 @@ export const TeamModal = ({
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} scrollBehavior='inside'>
+    <Modal
+      isOpen={isOpen}
+      onClose={() => {
+        onClose();
+        setActiveTab(TABS.TEAM);
+      }}
+      scrollBehavior='inside'>
       <ModalOverlay />
       <ModalContent
         my={0}
