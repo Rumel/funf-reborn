@@ -199,13 +199,40 @@ export interface Team {
   pulse_id: number;
   short_name: string;
 }
+
+export type LiveStat = {
+  assists: number;
+  bonus: number;
+  bps: number;
+  clean_sheets: number;
+  creativity: number;
+  goals_conceded: number;
+  goals_scored: number;
+  ict_index: number;
+  in_dreamteam: boolean;
+  influence: number;
+  minutes: number;
+  own_goals: number;
+  penalties_missed: number;
+  penalties_saved: number;
+  red_cards: number;
+  saves: number;
+  threat: number;
+  total_points: number;
+  yellow_cards: number;
+};
+
+export type LiveData = {
+  elements: { [key: string]: { explain: any; stats: LiveStat } };
+  fixtures: any[];
+};
 export interface StateContext {
   players: Player[] | null;
   playerTypes: PlayerTypes[] | null;
   playerStatCategories: PlayerStatCategories[] | null;
   teams: Team[] | null;
   game: Game | null;
-  live: any;
+  live: LiveData | null;
 }
 
 export interface StoreInterface {
