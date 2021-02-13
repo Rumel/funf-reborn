@@ -18,6 +18,14 @@ export const GwTransactions = ({
 }: Props) => {
   const sortedTransactions = _.sortBy(transactions, 'index');
 
+  if (sortedTransactions.length === 0) {
+    return (
+      <Center pt={8} pb={8}>
+        <Heading>No transactions</Heading>
+      </Center>
+    );
+  }
+
   return (
     <VStack align='stretch'>
       <Center>
