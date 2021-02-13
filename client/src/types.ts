@@ -232,7 +232,7 @@ export interface StateContext {
   playerStatCategories: PlayerStatCategories[] | null;
   teams: Team[] | null;
   game: Game | null;
-  live: LiveData | null;
+  live: { [key: string]: LiveData };
 }
 
 export interface StoreInterface {

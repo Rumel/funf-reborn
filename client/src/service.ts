@@ -24,7 +24,11 @@ export const setLeague = (dispatch: React.Dispatch<Action>, id: number) => {
 
 export const setLive = (dispatch: React.Dispatch<Action>, week: number) => {
   axios.get(`/api/live/${week}`).then(({ data }) => {
-    dispatch({ type: ActionType.SET_LIVE, payload: data });
+    const payload = {
+      data,
+      week,
+    };
+    dispatch({ type: ActionType.SET_LIVE, payload });
   });
 };
 

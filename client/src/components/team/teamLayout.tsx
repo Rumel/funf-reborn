@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Center,
@@ -8,20 +8,22 @@ import {
   useBreakpointValue,
   VStack,
 } from '@chakra-ui/react';
-import { LeagueEntry, PlayerInfo, Position, StandingRow } from '../../types';
+import { LeagueEntry, LiveData, PlayerInfo, Position } from '../../types';
 import { useStateContext } from '../../store';
 import { useLeagueContext } from '../../leagueStore';
-import { setBootstrap, setGame, setPicks } from '../../service';
+import { setBootstrap, setGame, setLive, setPicks } from '../../service';
 import { generatePlayerInfoFromPick } from '../../helpers/generatePlayerInfo';
 import _ from 'lodash';
+import { FunfSpinner } from '../shared/funfSpinner';
 
 type Props = {
   leagueEntry: LeagueEntry;
-  standingRow: StandingRow;
+  event?: number;
 };
 
 const generateLine = (
   line: PlayerInfo[],
+  live: LiveData | null,
   imageWidth: string | undefined,
   textHeight: string | undefined
 ) => {
@@ -29,12 +31,17 @@ const generateLine = (
     <Center>
       <HStack spacing='1rem'>
         {line.map((p) => {
+          let points = 0;
+          if (live) {
+            points = live.elements[p.id].stats.total_points;
+          }
+
           return (
             <Box key={p.id}>
               <VStack spacing='0.25rem'>
                 <Image w={imageWidth} src={p.url} alt={p.name} />
                 <Text size={textHeight}>{p.webName}</Text>
-                <Text size={textHeight}>{p.form}</Text>
+                <Text size={textHeight}>{live ? points : p.form}</Text>
               </VStack>
             </Box>
           );
@@ -44,13 +51,14 @@ const generateLine = (
   );
 };
 
-export const TeamLayout = ({ leagueEntry, standingRow }: Props) => {
+export const TeamLayout = ({ leagueEntry, event }: Props) => {
   const { state, dispatch } = useStateContext();
-  const { game, players } = state;
+  const { game, live, players } = state;
   const { leagueState, leagueDispatch } = useLeagueContext();
   const { picks } = leagueState;
   const imageWidth = useBreakpointValue({ base: '2.5em', md: '3.5em' });
   const textHeight = useBreakpointValue({ base: '0.75rem', md: '1rem' });
+  const [gameweek, setGameWeek] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     if (!players) {
@@ -59,24 +67,52 @@ export const TeamLayout = ({ leagueEntry, standingRow }: Props) => {
   }, [players, dispatch]);
 
   useEffect(() => {
-    if (game) {
-      if (!picks[`${leagueEntry.entry_id}-${game.current_event}`]) {
-        setPicks(leagueDispatch, leagueEntry.entry_id, game.current_event);
-      }
-    } else {
+    if (!game && !event) {
       setGame(dispatch);
     }
-  }, [leagueEntry, game, picks, dispatch, leagueDispatch]);
+  }, [game, event, dispatch]);
 
-  if (!(game && players)) {
-    return null;
+  useEffect(() => {
+    if (game) {
+      setGameWeek(game.current_event);
+    }
+  }, [setGameWeek, game]);
+
+  useEffect(() => {
+    if (event) {
+      setGameWeek(event);
+    }
+  }, [setGameWeek, event]);
+
+  useEffect(() => {
+    if (gameweek) {
+      if (!picks[`${leagueEntry.entry_id}-${gameweek}`]) {
+        setPicks(leagueDispatch, leagueEntry.entry_id, gameweek);
+      }
+    }
+  }, [gameweek, leagueEntry, picks, leagueDispatch]);
+
+  useEffect(() => {
+    if (event && !live[event]) {
+      setLive(dispatch, event);
+    }
+  }, [event, live, dispatch]);
+
+  if (!(gameweek && players)) {
+    return <FunfSpinner />;
   }
 
-  if (!picks[`${leagueEntry.entry_id}-${game.current_event}`]) {
-    return null;
+  if (event && !live[event]) {
+    return <FunfSpinner />;
   }
 
-  const teamPicks = picks[`${leagueEntry.entry_id}-${game.current_event}`];
+  const teamPicks = picks[`${leagueEntry.entry_id}-${gameweek}`];
+  const currentLive = live[gameweek];
+
+  if (!teamPicks) {
+    return <FunfSpinner />;
+  }
+
   const teamPlayers = teamPicks.picks
     .filter((p) => p.position < 12)
     .map((p) => generatePlayerInfoFromPick(p, players));
@@ -91,11 +127,11 @@ export const TeamLayout = ({ leagueEntry, standingRow }: Props) => {
 
   return (
     <VStack spacing='0.5rem'>
-      {generateLine(keepers, imageWidth, textHeight)}
-      {generateLine(defenders, imageWidth, textHeight)}
-      {generateLine(midfielders, imageWidth, textHeight)}
-      {generateLine(forwards, imageWidth, textHeight)}
-      {generateLine(subs, imageWidth, textHeight)}
+      {generateLine(keepers, currentLive, imageWidth, textHeight)}
+      {generateLine(defenders, currentLive, imageWidth, textHeight)}
+      {generateLine(midfielders, currentLive, imageWidth, textHeight)}
+      {generateLine(forwards, currentLive, imageWidth, textHeight)}
+      {generateLine(subs, currentLive, imageWidth, textHeight)}
     </VStack>
   );
 };

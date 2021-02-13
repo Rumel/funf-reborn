@@ -8,7 +8,7 @@ const initialState: StateContext = {
   playerStatCategories: null,
   teams: null,
   game: null,
-  live: null,
+  live: {},
 };
 
 const context = React.createContext<StoreInterface>({

@@ -14,7 +14,10 @@ const Reducer = (state: StateContext, action: Action) => {
     case ActionType.SET_GAME:
       return { ...state, game: action.payload };
     case ActionType.SET_LIVE:
-      return { ...state, live: action.payload };
+      return {
+        ...state,
+        live: { ...state.live, [action.payload.week]: action.payload.data },
+      };
     default:
       return state;
   }

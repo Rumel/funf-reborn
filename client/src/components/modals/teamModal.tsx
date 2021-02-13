@@ -93,10 +93,7 @@ export const TeamModal = ({
                   </ButtonGroup>
                 </Center>
                 {activeTab === TABS.TEAM ? (
-                  <TeamLayout
-                    leagueEntry={leagueEntry}
-                    standingRow={standingRow}
-                  />
+                  <TeamLayout leagueEntry={leagueEntry} />
                 ) : null}
                 {activeTab === TABS.STATS ? <Stats team={leagueEntry} /> : null}
                 {activeTab === TABS.MATCHES ? (
