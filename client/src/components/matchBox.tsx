@@ -6,8 +6,8 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import _, { matches } from 'lodash';
-import React, { useEffect } from 'react';
+import _ from 'lodash';
+import React, { useEffect, useState } from 'react';
 import { getTeamLink } from '../helpers/helpers';
 import { useLeagueContext } from '../leagueStore';
 import { setLive, setPicks } from '../service';
@@ -32,8 +32,8 @@ export const MatchBox = ({ away, home, match, color }: Props) => {
   const awayPicks = picks[`${away.entry_id}-${match.event}`];
   const homePicks = picks[`${home.entry_id}-${match.event}`];
   const currentLive = live[match.event];
-  let homeScore = 0;
-  let awayScore = 0;
+  const [awayScore, setAwayScore] = useState<number | undefined>(undefined);
+  const [homeScore, setHomeScore] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     if (!awayPicks && !match.finished) {
@@ -53,31 +53,39 @@ export const MatchBox = ({ away, home, match, color }: Props) => {
     }
   }, [currentLive, dispatch, match]);
 
-  if (
-    !match.finished &&
-    (awayPicks === null || homePicks === null || currentLive === null)
-  ) {
-    return <FunfSpinner />;
-  }
-
-  if (!match.finished && currentLive && homePicks && awayPicks) {
-    awayScore =
-      _.reduce(
+  useEffect(() => {
+    if (!match.finished && currentLive && homePicks && awayPicks) {
+      const awayScore = _.reduce(
         _.map(
           _.filter(awayPicks.picks, (p) => p.position < 12),
           (p) => currentLive.elements[p.element].stats.total_points
         ),
         (x, y) => x + y
-      ) || 0;
+      );
 
-    homeScore =
-      _.reduce(
+      setAwayScore(awayScore);
+
+      const homeScore = _.reduce(
         _.map(
           _.filter(homePicks.picks, (p) => p.position < 12),
           (p) => currentLive.elements[p.element].stats.total_points
         ),
         (x, y) => x + y
-      ) || 0;
+      );
+
+      setHomeScore(homeScore);
+    }
+  }, [match, currentLive, homePicks, awayPicks]);
+
+  if (
+    !match.finished &&
+    (awayPicks === null ||
+      homePicks === null ||
+      currentLive === null ||
+      homeScore === undefined ||
+      awayScore === undefined)
+  ) {
+    return <FunfSpinner />;
   }
 
   return (
@@ -86,8 +94,12 @@ export const MatchBox = ({ away, home, match, color }: Props) => {
         isOpen={isOpen}
         onClose={onClose}
         home={home}
-        homeScore={match.finished ? match.league_entry_2_points : homeScore}
-        awayScore={match.finished ? match.league_entry_1_points : awayScore}
+        homeScore={
+          match.finished ? match.league_entry_2_points : homeScore || 0
+        }
+        awayScore={
+          match.finished ? match.league_entry_1_points : awayScore || 0
+        }
         away={away}
         event={match.event}
       />
