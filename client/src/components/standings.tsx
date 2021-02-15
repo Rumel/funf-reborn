@@ -16,7 +16,6 @@ import {
 } from '@chakra-ui/react';
 import _ from 'lodash';
 import { useLeagueContext } from '../leagueStore';
-import { setGame, setLeague } from '../service';
 import { LeagueEntry, StandingRow } from '../types';
 import { TeamModal } from './modals/teamModal';
 import { PromotionLine } from './promotionLine';
@@ -29,28 +28,13 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 const mobileDisplay = ['none', 'none', 'table-cell'];
 
 export const Standings = () => {
-  const { state, dispatch } = useStateContext();
+  const { state } = useStateContext();
   const { game } = state;
-  const { leagueState, leagueDispatch } = useLeagueContext();
+  const { leagueState } = useLeagueContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { id, league_entries, standings, advancement, matches } = leagueState;
+  const { league_entries, standings, advancement, matches } = leagueState;
   const [modalLeagueEntry, setModalLeagueEntry] = useState<LeagueEntry>();
   const [modalStandingRow, setModalStandingRow] = useState<StandingRow>();
-
-  useEffect(() => {
-    if (
-      (league_entries === null || standings === null || matches === null) &&
-      id !== null
-    ) {
-      setLeague(leagueDispatch, id);
-    }
-  }, [league_entries, standings, matches, id, leagueDispatch]);
-
-  useEffect(() => {
-    if (game === null) {
-      setGame(dispatch);
-    }
-  }, [game, dispatch]);
 
   if (
     league_entries === null ||

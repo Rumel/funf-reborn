@@ -3,7 +3,7 @@ import { Center, Flex, Grid, Heading, VStack } from '@chakra-ui/react';
 import { LeagueEntry } from '../../types';
 import { useLeagueContext } from '../../leagueStore';
 import { FunfSpinner } from '../shared/funfSpinner';
-import { setLeague, setTransactions } from '../../service';
+import { setTransactions } from '../../service';
 import _ from 'lodash';
 import * as ss from 'simple-statistics';
 
@@ -57,12 +57,6 @@ const renderStatBox = (
 export const Stats = ({ team }: Props) => {
   const { leagueState, leagueDispatch } = useLeagueContext();
   const { id, matches, standings, transactions } = leagueState;
-
-  useEffect(() => {
-    if ((matches === null || standings === null) && id !== null) {
-      setLeague(leagueDispatch, id);
-    }
-  }, [matches, standings, id, leagueDispatch]);
 
   useEffect(() => {
     if (transactions === null && id !== null) {

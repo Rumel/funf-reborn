@@ -4,7 +4,7 @@ import { LeagueEntry } from '../../types';
 import { useLeagueContext } from '../../leagueStore';
 import { FunfSpinner } from '../shared/funfSpinner';
 import _ from 'lodash';
-import { setBootstrap, setTransactions } from '../../service';
+import { setTransactions } from '../../service';
 import { useStateContext } from '../../store';
 import { generatePlayerInfo } from '../../helpers/generatePlayerInfo';
 import { TransactionBox } from '../shared/transactionBox';
@@ -24,12 +24,6 @@ export const TeamTransactions = ({ leagueEntry }: Props) => {
       setTransactions(leagueDispatch, id);
     }
   }, [id, transactions, leagueDispatch]);
-
-  useEffect(() => {
-    if (players === null) {
-      setBootstrap(dispatch);
-    }
-  }, [players, dispatch]);
 
   if (transactions === null || players === null) {
     return <FunfSpinner />;

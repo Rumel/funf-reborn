@@ -11,7 +11,7 @@ import {
 import { LeagueEntry, LiveData, PlayerInfo, Position } from '../../types';
 import { useStateContext } from '../../store';
 import { useLeagueContext } from '../../leagueStore';
-import { setBootstrap, setGame, setLive, setPicks } from '../../service';
+import { setLive, setPicks } from '../../service';
 import { generatePlayerInfoFromPick } from '../../helpers/generatePlayerInfo';
 import _ from 'lodash';
 import { FunfSpinner } from '../shared/funfSpinner';
@@ -59,18 +59,6 @@ export const TeamLayout = ({ leagueEntry, event }: Props) => {
   const imageWidth = useBreakpointValue({ base: '2.5em', md: '3.5em' });
   const textHeight = useBreakpointValue({ base: '0.75rem', md: '1rem' });
   const [gameweek, setGameWeek] = useState<number | undefined>(undefined);
-
-  useEffect(() => {
-    if (!players) {
-      setBootstrap(dispatch);
-    }
-  }, [players, dispatch]);
-
-  useEffect(() => {
-    if (!game && !event) {
-      setGame(dispatch);
-    }
-  }, [game, event, dispatch]);
 
   useEffect(() => {
     if (game) {

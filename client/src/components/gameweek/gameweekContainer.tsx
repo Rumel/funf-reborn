@@ -13,7 +13,7 @@ import { useStateContext } from '../../store';
 import { useLeagueContext } from '../../leagueStore';
 import _ from 'lodash';
 import { GwTransactions } from './gwTransactions';
-import { setBootstrap, setTransactions } from '../../service';
+import { setTransactions } from '../../service';
 import { GwMatchContainer } from './gwMatchContainer';
 
 enum TABS {
@@ -34,12 +34,6 @@ export const GameweekContainer = () => {
       setSelectedGameweek(game.current_event);
     }
   }, [game]);
-
-  useEffect(() => {
-    if (players === null) {
-      setBootstrap(dispatch);
-    }
-  }, [players, dispatch]);
 
   useEffect(() => {
     if (transactions === null && id !== null) {

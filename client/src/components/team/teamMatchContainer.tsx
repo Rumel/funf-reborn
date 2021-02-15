@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLeagueContext } from '../../leagueStore';
-import { setLeague } from '../../service';
 import { FunfSpinner } from '../shared/funfSpinner';
 import { LeagueEntry, Match } from '../../types';
 import _ from 'lodash';
-import { Center, Container, Grid, Heading, VStack } from '@chakra-ui/react';
+import { Center, Grid, Heading, VStack } from '@chakra-ui/react';
 import { MatchBox } from '../matchBox';
 import { MATCH_RESULT_COLORS } from '../../constants';
 
@@ -31,14 +30,8 @@ const getColoredResult = (match: Match, teamId: number): string => {
 };
 
 export const TeamMatchContainer = ({ team }: Props) => {
-  const { leagueState, leagueDispatch } = useLeagueContext();
-  const { id, league_entries, matches } = leagueState;
-
-  useEffect(() => {
-    if ((matches === null || league_entries === null) && id !== null) {
-      setLeague(leagueDispatch, id);
-    }
-  }, [league_entries, matches, id, leagueDispatch]);
+  const { leagueState } = useLeagueContext();
+  const { league_entries, matches } = leagueState;
 
   if (league_entries === null || matches === null) {
     return <FunfSpinner />;
