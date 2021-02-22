@@ -68,8 +68,8 @@ export interface Match {
   league_entry_2: number;
   league_entry_2_points: number;
   started: boolean;
-  winning_league_entry: any;
-  winning_method: any;
+  winning_league_entry: unknown;
+  winning_method: unknown;
 }
 
 export interface Transaction {
@@ -127,8 +127,8 @@ export interface Player {
   code: number;
   draft_rank: number | null;
   dreamteam_count: number | null;
-  ep_next: any;
-  ep_this: any;
+  ep_next: unknown;
+  ep_this: unknown;
   event_points: number | null;
   first_name: string;
   form: string;
@@ -139,7 +139,7 @@ export interface Player {
   news_updated: string | null;
   points_per_game: string | null;
   second_name: string;
-  squad_number: any | null;
+  squad_number: unknown | null;
   status: string | null;
   total_points: number | null;
   web_name: string;
@@ -152,7 +152,7 @@ export interface Player {
   ict_index_rank: number | null;
   ict_index_rank_type: number | null;
   element_type: number;
-  team: number | null;
+  team: number;
 }
 
 export enum Position {
@@ -172,6 +172,7 @@ export type PlayerInfo = {
   url: string;
   position: Position;
   form: string;
+  matches: string | undefined;
 };
 
 export interface PlayerTypes {
@@ -188,7 +189,7 @@ export interface PlayerStatCategories {
   label: string;
   abbreviation: string;
   is_match_stat: boolean;
-  match_stat_order: any;
+  match_stat_order: unknown;
   sort: string;
 }
 
@@ -222,9 +223,26 @@ export type LiveStat = {
   yellow_cards: number;
 };
 
+export type Fixture = {
+  id: number;
+  started: boolean;
+  stats: [];
+  code: number;
+  finished: boolean;
+  finished_provisional: boolean;
+  kickoff_time: string;
+  minutes: number;
+  provisional_start_time: boolean;
+  team_a_score: number;
+  team_h_score: number;
+  event: number;
+  team_a: number;
+  team_h: number;
+};
+
 export type LiveData = {
-  elements: { [key: string]: { explain: any; stats: LiveStat } };
-  fixtures: any[];
+  elements: { [key: string]: { explain: unknown; stats: LiveStat } };
+  fixtures: Fixture[];
 };
 export interface StateContext {
   players: Player[] | null;
@@ -268,3 +286,15 @@ export interface LeagueInterface {
   leagueState: LeagueContext;
   leagueDispatch: React.Dispatch<Action>;
 }
+
+export type TeamInfo = {
+  code: number;
+  id: number;
+  name: string;
+  pulseId: number;
+  shortName: string;
+};
+
+export type TeamInfoObject = {
+  [key: number]: TeamInfo;
+};

@@ -13,6 +13,7 @@ const initialState: StateContext = {
 
 const context = React.createContext<StoreInterface>({
   state: initialState,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   dispatch: () => {},
 });
 

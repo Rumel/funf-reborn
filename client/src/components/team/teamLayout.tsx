@@ -25,7 +25,8 @@ const generateLine = (
   line: PlayerInfo[],
   live: LiveData | null,
   imageWidth: string | undefined,
-  textHeight: string | undefined
+  textHeight: string | undefined,
+  smallerTextHeight: string | undefined
 ) => {
   return (
     <Center>
@@ -40,8 +41,11 @@ const generateLine = (
             <Box key={p.id}>
               <VStack spacing='0.25rem'>
                 <Image w={imageWidth} src={p.url} alt={p.name} />
-                <Text size={textHeight}>{p.webName}</Text>
-                <Text size={textHeight}>{live ? points : p.form}</Text>
+                <Text fontSize={textHeight}>{p.webName}</Text>
+                {p.matches ? (
+                  <Text fontSize={smallerTextHeight}>{p.matches}</Text>
+                ) : null}
+                <Text fontSize={textHeight}>{live ? points : p.form}</Text>
               </VStack>
             </Box>
           );
@@ -57,7 +61,11 @@ export const TeamLayout = ({ leagueEntry, event }: Props) => {
   const { leagueState, leagueDispatch } = useLeagueContext();
   const { picks } = leagueState;
   const imageWidth = useBreakpointValue({ base: '2.5em', md: '3.5em' });
-  const textHeight = useBreakpointValue({ base: '0.75rem', md: '1rem' });
+  const textHeight = useBreakpointValue({ base: '1rem', md: '1rem' });
+  const smallerTextHeight = useBreakpointValue({
+    base: '0.5rem',
+    md: '0.75rem',
+  });
   const [gameweek, setGameWeek] = useState<number | undefined>(undefined);
 
   useEffect(() => {
@@ -103,10 +111,10 @@ export const TeamLayout = ({ leagueEntry, event }: Props) => {
 
   const teamPlayers = teamPicks.picks
     .filter((p) => p.position < 12)
-    .map((p) => generatePlayerInfoFromPick(p, players));
+    .map((p) => generatePlayerInfoFromPick(p, players, currentLive));
   const subs = teamPicks.picks
     .filter((p) => p.position > 11)
-    .map((p) => generatePlayerInfoFromPick(p, players));
+    .map((p) => generatePlayerInfoFromPick(p, players, currentLive));
 
   const keepers = _.filter(teamPlayers, (p) => p.position === Position.GKP);
   const defenders = _.filter(teamPlayers, (p) => p.position === Position.DEF);
@@ -115,11 +123,41 @@ export const TeamLayout = ({ leagueEntry, event }: Props) => {
 
   return (
     <VStack spacing='0.5rem'>
-      {generateLine(keepers, currentLive, imageWidth, textHeight)}
-      {generateLine(defenders, currentLive, imageWidth, textHeight)}
-      {generateLine(midfielders, currentLive, imageWidth, textHeight)}
-      {generateLine(forwards, currentLive, imageWidth, textHeight)}
-      {generateLine(subs, currentLive, imageWidth, textHeight)}
+      {generateLine(
+        keepers,
+        currentLive,
+        imageWidth,
+        textHeight,
+        smallerTextHeight
+      )}
+      {generateLine(
+        defenders,
+        currentLive,
+        imageWidth,
+        textHeight,
+        smallerTextHeight
+      )}
+      {generateLine(
+        midfielders,
+        currentLive,
+        imageWidth,
+        textHeight,
+        smallerTextHeight
+      )}
+      {generateLine(
+        forwards,
+        currentLive,
+        imageWidth,
+        textHeight,
+        smallerTextHeight
+      )}
+      {generateLine(
+        subs,
+        currentLive,
+        imageWidth,
+        textHeight,
+        smallerTextHeight
+      )}
     </VStack>
   );
 };

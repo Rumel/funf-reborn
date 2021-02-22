@@ -1,0 +1,148 @@
+import { TeamInfo, TeamInfoObject } from '../types';
+
+const teams: TeamInfoObject = {
+  1: {
+    code: 3,
+    id: 1,
+    name: 'Arsenal',
+    pulseId: 1,
+    shortName: 'ARS',
+  },
+  2: {
+    code: 7,
+    id: 2,
+    name: 'Aston Villa',
+    pulseId: 2,
+    shortName: 'AVL',
+  },
+  3: {
+    code: 36,
+    id: 3,
+    name: 'Brighton',
+    pulseId: 131,
+    shortName: 'BHA',
+  },
+  4: {
+    code: 90,
+    id: 4,
+    name: 'Burnley',
+    pulseId: 43,
+    shortName: 'BUR',
+  },
+  5: {
+    code: 8,
+    id: 5,
+    name: 'Chelsea',
+    pulseId: 4,
+    shortName: 'CHE',
+  },
+  6: {
+    code: 31,
+    id: 6,
+    name: 'Crystal Palace',
+    pulseId: 6,
+    shortName: 'CRY',
+  },
+  7: {
+    code: 11,
+    id: 7,
+    name: 'Everton',
+    pulseId: 7,
+    shortName: 'EVE',
+  },
+  8: {
+    code: 54,
+    id: 8,
+    name: 'Fulham',
+    pulseId: 34,
+    shortName: 'FUL',
+  },
+  9: {
+    code: 13,
+    id: 9,
+    name: 'Leicester',
+    pulseId: 26,
+    shortName: 'LEI',
+  },
+  10: {
+    code: 2,
+    id: 10,
+    name: 'Leeds',
+    pulseId: 9,
+    shortName: 'LEE',
+  },
+  11: {
+    code: 14,
+    id: 11,
+    name: 'Liverpool',
+    pulseId: 10,
+    shortName: 'LIV',
+  },
+  12: {
+    code: 43,
+    id: 12,
+    name: 'Man City',
+    pulseId: 11,
+    shortName: 'MCI',
+  },
+  13: {
+    code: 1,
+    id: 13,
+    name: 'Man Utd',
+    pulseId: 12,
+    shortName: 'MUN',
+  },
+  14: {
+    code: 4,
+    id: 14,
+    name: 'Newcastle',
+    pulseId: 23,
+    shortName: 'NEW',
+  },
+  15: {
+    code: 49,
+    id: 15,
+    name: 'Sheffield Utd',
+    pulseId: 18,
+    shortName: 'SHU',
+  },
+  16: {
+    code: 20,
+    id: 16,
+    name: 'Southampton',
+    pulseId: 20,
+    shortName: 'SOU',
+  },
+  17: {
+    code: 6,
+    id: 17,
+    name: 'Spurs',
+    pulseId: 21,
+    shortName: 'TOT',
+  },
+  18: {
+    code: 35,
+    id: 18,
+    name: 'West Brom',
+    pulseId: 36,
+    shortName: 'WBA',
+  },
+  19: {
+    code: 21,
+    id: 19,
+    name: 'West Ham',
+    pulseId: 25,
+    shortName: 'WHU',
+  },
+  20: {
+    code: 39,
+    id: 20,
+    name: 'Wolves',
+    pulseId: 38,
+    shortName: 'WOL',
+  },
+};
+
+export const getTeam = (id: number): TeamInfo => {
+  return teams[id];
+};

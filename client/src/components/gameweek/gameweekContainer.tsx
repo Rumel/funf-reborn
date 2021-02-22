@@ -22,7 +22,7 @@ enum TABS {
 }
 
 export const GameweekContainer = () => {
-  const { state, dispatch } = useStateContext();
+  const { state } = useStateContext();
   const { leagueState, leagueDispatch } = useLeagueContext();
   const [selectedGameweek, setSelectedGameweek] = useState<number | null>(null);
   const { game, players } = state;
