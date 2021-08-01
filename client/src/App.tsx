@@ -32,7 +32,7 @@ function App() {
     <Container maxW='4xl' pt={4} pb={4}>
       <Stack spacing={3}>
         <LeagueStore
-          id={11831}
+          id={26216}
           advancement={{
             possiblePromotion: [],
             possibleRelegation: [6],
@@ -42,7 +42,7 @@ function App() {
           <League />
         </LeagueStore>
         <LeagueStore
-          id={41399}
+          id={32016}
           advancement={{
             possiblePromotion: [3],
             possibleRelegation: [],
