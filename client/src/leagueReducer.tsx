@@ -7,12 +7,8 @@ const LeagueReducer = (state: LeagueContext, action: Action) => {
     case ActionType.SET_LEAGUE_ADVANCEMENT:
       return { ...state, advancement: action.payload.advancement };
     case ActionType.SET_LEAGUE:
-      const {
-        league,
-        league_entries,
-        matches,
-        standings,
-      } = action.payload.data;
+      const { league, league_entries, matches, standings } =
+        action.payload.data;
 
       return {
         ...state,

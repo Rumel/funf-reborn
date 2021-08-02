@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Stack,
@@ -116,7 +116,9 @@ export const Standings = () => {
               }
 
               return (
-                <Tr key={standing.rank} bgColor={getRowColor(standing.rank)}>
+                <Tr
+                  key={standing.league_entry}
+                  bgColor={getRowColor(standing.rank)}>
                   <Td>
                     <Center>{standing.rank}</Center>
                   </Td>
@@ -141,19 +143,19 @@ export const Standings = () => {
                     </Stack>
                   </Td>
                   <Td display={mobileDisplay}>
-                    <Center>{standing.matches_won}</Center>
+                    <Center>{standing.matches_won || 0}</Center>
                   </Td>
                   <Td display={mobileDisplay}>
-                    <Center>{standing.matches_lost}</Center>
+                    <Center>{standing.matches_lost || 0}</Center>
                   </Td>
                   <Td display={mobileDisplay}>
-                    <Center>{standing.matches_drawn}</Center>
+                    <Center>{standing.matches_drawn || 0}</Center>
                   </Td>
                   <Td display={mobileDisplay}>
-                    <Center>{standing.points_for}</Center>
+                    <Center>{standing.points_for || 0}</Center>
                   </Td>
                   <Td>
-                    <Center>{standing.total}</Center>
+                    <Center>{standing.total || 0}</Center>
                   </Td>
                   <Td onClick={() => handleRowClick(leagueEntry, standing)}>
                     <Center>
