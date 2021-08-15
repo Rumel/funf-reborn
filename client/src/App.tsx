@@ -42,7 +42,7 @@ function App() {
           <League />
         </LeagueStore>
         <LeagueStore
-          id={32016}
+          id={93935}
           advancement={{
             possiblePromotion: [3],
             possibleRelegation: [],
